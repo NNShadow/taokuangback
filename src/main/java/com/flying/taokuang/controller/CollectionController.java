@@ -1,5 +1,6 @@
 package com.flying.taokuang.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.flying.taokuang.dataobject.Collection;
 import com.flying.taokuang.service.CollectionService;
 import com.flying.taokuang.utils.JwtUtil;
@@ -31,13 +32,19 @@ public class CollectionController {
      */
     @RequestMapping("/select")
     public String select(@RequestParam(value = "token",required = false) String token){
+        JSONObject result = new JSONObject();
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
-            return "token错误";
+            result.put("msg", "token错误");
+            result.put("success", false);
+            return result.toJSONString();
         }
         int collectorId = (int) JwtUtil.getClamis(token, encry).get("id");
         List<Collection> collectionList = collectionService.selectByCollectorId(collectorId);
-        return collectionList.toString();
+        result.put("collectionList", collectionList);
+        result.put("msg", "token错误");
+        result.put("success", true);
+        return result.toJSONString();
     }
 
     /**
@@ -48,9 +55,12 @@ public class CollectionController {
      */
     @RequestMapping("/add")
     public String add(@RequestParam(value = "token",required = false) String token, int collectionId){
+        JSONObject result = new JSONObject();
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
-            return "token错误";
+            result.put("msg", "token错误");
+            result.put("success", false);
+            return result.toJSONString();
         }
 
         if (collectionId != 0){
@@ -62,9 +72,13 @@ public class CollectionController {
             collection.setCreatedDate(new Date());
             collection.setUpdateDate(new Date());
             collectionService.insert(collection);
-            return "收集成功";
+            result.put("msg", "收集成功");
+            result.put("success", true);
+            return result.toJSONString();
         }
-        return "收集失败";
+        result.put("msg", "收集失败");
+        result.put("success", false);
+        return result.toJSONString();
     }
 
     /**
@@ -75,17 +89,24 @@ public class CollectionController {
      */
     @RequestMapping("/delete")
     public String delete(@RequestParam(value = "token",required = false) String token, int collectionId){
+        JSONObject result = new JSONObject();
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
-            return "token错误";
+            result.put("msg", "token错误");
+            result.put("success", false);
+            return result.toJSONString();
         }
 
         if (collectionId != 0){
             //获取评论者id，修改评论者
             int userId = (int) JwtUtil.getClamis(token, encry).get("id");
             collectionService.deleteByUserIdAndCollectionId(userId, collectionId);
-            return "取消收藏成功";
+            result.put("msg", "取消收藏成功");
+            result.put("success", true);
+            return result.toJSONString();
         }
-        return "取消收藏失败";
+        result.put("msg", "取消收藏失败");
+        result.put("success", false);
+        return result.toJSONString();
     }
 }

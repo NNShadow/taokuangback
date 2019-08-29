@@ -1,5 +1,6 @@
 package com.flying.taokuang.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.flying.taokuang.dataobject.Content;
 import com.flying.taokuang.dataobject.User;
 import com.flying.taokuang.service.ContentService;
@@ -9,6 +10,7 @@ import com.flying.taokuang.utils.PasswordEncryUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,18 +39,25 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping("/signup")
+    @RequestMapping(value = "/signup", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String signUp(User user){
         user.setCreatedDate(new Date());
         user.setUpdatedDate(new Date());
+
+        JSONObject result = new JSONObject();
         if (judgeUserNotFinish(user)){
-            return "有信息空缺";
+            result.put("msg", "有信息空缺");
+            result.put("success", false);
+            return result.toJSONString();
         }
         if (userService.insert(user) != 0){
-            return "成功";
+            result.put("msg", "成功");
+            result.put("success", true);
         }else {
-            return "失败";
+            result.put("msg", "失败");
+            result.put("success", false);
         }
+        return result.toJSONString();
     }
 
     /**
@@ -60,14 +69,26 @@ public class UserController {
      */
     @RequestMapping("/login")
     public String login(User user) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        JSONObject result = new JSONObject();
+
         if (!StringUtils.isBlank(user.getUsername()) && !StringUtils.isBlank(user.getPassword())){
             User userSearch = userService.selectByUsername(user.getUsername());
             if (userSearch.getPassword().equals(PasswordEncryUtil.encodeByMd5(user.getPassword()))){
                 //生成token返回
-                return JwtUtil.getToken(user, "salt", 60 * 30);
+                String token = JwtUtil.getToken(user, "salt", 60 * 30);
+                result.put("msg", "生成token");
+                result.put("token", token);
+                result.put("success", true);
+                return result.toJSONString();
             }
+            result.put("msg", "密码错误");
         }
-        return "登陆错误";
+        if (!result.containsKey("msg")){
+            result.put("msg", "缺少信息");
+        }
+        result.put("success", false);
+        result.put("token", null);
+        return result.toJSONString();
     }
 
     /**
@@ -77,14 +98,20 @@ public class UserController {
      */
     @RequestMapping("/modify")
     public String modify(User user, @RequestParam(value = "token", required = false) String token){
+        JSONObject result = new JSONObject();
+
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
-            return "token错误";
+            result.put("msg", "token错误");
+            result.put("success", false);
+            return result.toJSONString();
         }
 
         user.setUpdatedDate(new Date());
         if (judgeUserNotFinish(user)){
-            return "有信息空缺";
+            result.put("msg", "有信息空缺");
+            result.put("success", false);
+            return result.toJSONString();
         }
         String userNewName = user.getUsername();
         if (userService.update(user) != 0){
@@ -95,9 +122,15 @@ public class UserController {
                 content.setUsername(userNewName);
                 contentService.update(content);
             });
-            return JwtUtil.getToken(user, "salt", 60 * 30);
+            String newToken = JwtUtil.getToken(user, "salt", 60 * 30);
+            result.put("msg", "修改成功");
+            result.put("success", true);
+            result.put("token", newToken);
+            return result.toJSONString();
         }else {
-            return "失败";
+            result.put("msg", "修改失败");
+            result.put("success", false);
+            return result.toJSONString();
         }
     }
 

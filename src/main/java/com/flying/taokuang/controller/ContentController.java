@@ -1,5 +1,6 @@
 package com.flying.taokuang.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.flying.taokuang.dataobject.Content;
 import com.flying.taokuang.service.ContentService;
 import com.flying.taokuang.utils.JwtUtil;
@@ -31,18 +32,25 @@ public class ContentController {
      */
     @RequestMapping("/add")
     public String add(Content content, @RequestParam(value = "token", required = false) String token){
+        JSONObject result = new JSONObject();
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
-            return "token错误";
+            result.put("msg", "token错误");
+            result.put("success", false);
+            return result.toJSONString();
         }
         if (content != null){
             content.setCreatedDate(new Date());
             content.setUpdatedDate(new Date());
             if (contentService.insert(content) != 0){
-                return "成功";
+                result.put("msg", "添加成功");
+                result.put("success", true);
+                return result.toJSONString();
             }
         }
-        return "失败";
+        result.put("msg", "添加失败");
+        result.put("success", false);
+        return result.toJSONString();
     }
 
     /**
@@ -53,16 +61,23 @@ public class ContentController {
      */
     @RequestMapping("/delete")
     public String delete(@RequestParam(value = "contentId") int contentId, @RequestParam(value = "token", required = false) String token){
+        JSONObject result = new JSONObject();
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
-            return "token错误";
+            result.put("msg", "token错误");
+            result.put("success", false);
+            return result.toJSONString();
         }
         if (contentId != 0){
             if (contentService.deleteById(contentId) != 0){
-                return "成功";
+                result.put("msg", "删除成功");
+                result.put("success", true);
+                return result.toJSONString();
             }
         }
-        return "失败";
+        result.put("msg", "删除失败");
+        result.put("success", false);
+        return result.toJSONString();
     }
 
     /**
@@ -73,17 +88,24 @@ public class ContentController {
      */
     @RequestMapping("/modify")
     public String modify(Content content, @RequestParam(value = "token", required = false) String token){
+        JSONObject result = new JSONObject();
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
-            return "token错误";
+            result.put("msg", "token错误");
+            result.put("success", false);
+            return result.toJSONString();
         }
         if (content != null){
             content.setUpdatedDate(new Date());
             if (contentService.update(content) != 0){
-                return "成功";
+                result.put("msg", "修改成功");
+                result.put("success", true);
+                return result.toJSONString();
             }
         }
-        return "失败";
+        result.put("msg", "修改失败");
+        result.put("success", false);
+        return result.toJSONString();
     }
 
 }

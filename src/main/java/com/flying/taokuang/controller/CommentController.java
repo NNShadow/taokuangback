@@ -1,5 +1,6 @@
 package com.flying.taokuang.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.flying.taokuang.dataobject.Comment;
 import com.flying.taokuang.dataobject.User;
 import com.flying.taokuang.service.CommentService;
@@ -37,9 +38,12 @@ public class CommentController {
      */
     @RequestMapping("/add")
     public String addComment(Comment comment, @RequestParam(value = "token", required = false) String token){
+        JSONObject result = new JSONObject();
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
-            return "token错误";
+            result.put("msg", "token错误");
+            result.put("success", false);
+            return result.toJSONString();
         }
 
         if (!StringUtils.isBlank(comment.getContent()) &&
@@ -53,9 +57,13 @@ public class CommentController {
             comment.setCreatedDate(new Date());
             comment.setUpdatedDate(new Date());
             commentService.insert(comment);
-            return "评论成功";
+            result.put("msg", "评论成功");
+            result.put("success", true);
+            return result.toJSONString();
         }
-        return "缺少信息";
+        result.put("msg", "缺少信息");
+        result.put("success", false);
+        return result.toJSONString();
     }
 
     /**
@@ -66,10 +74,17 @@ public class CommentController {
      */
     @RequestMapping("/select")
     public String selectComment(Comment comment, @RequestParam(value = "token", required = false) String token){
+        JSONObject result = new JSONObject();
         List<Comment> commentList = commentService.selectByContentGoodsId(comment.getContentGoodsId());
         if (commentList != null){
-            return null;
+            result.put("msg", "评论内容");
+            result.put("success", true);
+            result.put("commentList", commentList);
+            return result.toJSONString();
         }
-        return commentList.toString();
+        result.put("msg", "无内容");
+        result.put("success", true);
+        result.put("commentList", null);
+        return result.toJSONString();
     }
 }
