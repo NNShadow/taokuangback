@@ -9,6 +9,7 @@ import com.flying.taokuang.utils.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +37,7 @@ public class CommentController {
      * @param token
      * @return
      */
-    @RequestMapping("/add")
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String addComment(Comment comment, @RequestParam(value = "token", required = false) String token){
         JSONObject result = new JSONObject();
         //验证token
@@ -72,7 +73,7 @@ public class CommentController {
      * @param token
      * @return
      */
-    @RequestMapping("/select")
+    @RequestMapping(value = "/select", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String selectComment(Comment comment, @RequestParam(value = "token", required = false) String token){
         JSONObject result = new JSONObject();
         List<Comment> commentList = commentService.selectByContentGoodsId(comment.getContentGoodsId());

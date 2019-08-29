@@ -7,6 +7,7 @@ import com.flying.taokuang.utils.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class ContentController {
      * @param token
      * @return
      */
-    @RequestMapping("/add")
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String add(Content content, @RequestParam(value = "token", required = false) String token){
         JSONObject result = new JSONObject();
         //验证token
@@ -59,7 +60,7 @@ public class ContentController {
      * @param token
      * @return
      */
-    @RequestMapping("/delete")
+    @RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String delete(@RequestParam(value = "contentId") int contentId, @RequestParam(value = "token", required = false) String token){
         JSONObject result = new JSONObject();
         //验证token
@@ -86,7 +87,7 @@ public class ContentController {
      * @param token
      * @return
      */
-    @RequestMapping("/modify")
+    @RequestMapping(value = "/modify", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String modify(Content content, @RequestParam(value = "token", required = false) String token){
         JSONObject result = new JSONObject();
         //验证token

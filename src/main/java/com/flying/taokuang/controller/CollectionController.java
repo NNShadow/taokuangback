@@ -7,6 +7,7 @@ import com.flying.taokuang.utils.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class CollectionController {
      * @param token
      * @return
      */
-    @RequestMapping("/select")
+    @RequestMapping(value = "/select", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String select(@RequestParam(value = "token",required = false) String token){
         JSONObject result = new JSONObject();
         //验证token
@@ -53,8 +54,9 @@ public class CollectionController {
      * @param collectionId
      * @return
      */
-    @RequestMapping("/add")
-    public String add(@RequestParam(value = "token",required = false) String token, int collectionId){
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    public String add(@RequestParam(value = "token",required = false) String token,
+                      @RequestParam(value = "collectionId", required = false) int collectionId){
         JSONObject result = new JSONObject();
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
@@ -87,8 +89,9 @@ public class CollectionController {
      * @param collectionId
      * @return
      */
-    @RequestMapping("/delete")
-    public String delete(@RequestParam(value = "token",required = false) String token, int collectionId){
+    @RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    public String delete(@RequestParam(value = "token",required = false) String token,
+                         @RequestParam(value = "collectionId", required = false) int collectionId){
         JSONObject result = new JSONObject();
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){

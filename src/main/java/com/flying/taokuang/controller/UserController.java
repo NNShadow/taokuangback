@@ -39,7 +39,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping(value = "/signup", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/signup", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String signUp(User user){
         user.setCreatedDate(new Date());
         user.setUpdatedDate(new Date());
@@ -67,7 +67,7 @@ public class UserController {
      * @throws UnsupportedEncodingException
      * @throws NoSuchAlgorithmException
      */
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String login(User user) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         JSONObject result = new JSONObject();
 
@@ -96,7 +96,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping("/modify")
+    @RequestMapping(value = "/modify", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String modify(User user, @RequestParam(value = "token", required = false) String token){
         JSONObject result = new JSONObject();
 
