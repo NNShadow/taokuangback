@@ -3,8 +3,11 @@ package com.flying.taokuang.service.impl;
 import com.flying.taokuang.dao.UserMapper;
 import com.flying.taokuang.dataobject.User;
 import com.flying.taokuang.service.UserService;
+import com.flying.taokuang.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 /**
  * @author NNShadow
@@ -22,12 +25,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insert(User user) {
-        return userMapper.insert(user);
+        user.setPassword(MD5Util.md5(user.getPassword()));
+        if (userMapper.selectByUsername(user.getUsername()) == null){
+            return userMapper.insert(user);
+        }
+        return 0;
     }
 
     @Override
-    public User selectByStudentId(String studentId) {
-        return userMapper.selectByStudentId(studentId);
+    public User selectById(int id) {
+        return userMapper.selectById(id);
     }
 
     @Override
@@ -36,7 +43,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int update(User record) {
-        return userMapper.update(record);
+    public int update(User user) {
+        user.setPassword(MD5Util.md5(user.getPassword()));
+        user.setUpdatedDate(new Date());
+        User select = userMapper.selectByUsername(user.getUsername());
+        if (select == null || select.getUsername().equals(user.getUsername())){
+            return userMapper.update(user);
+        }
+        return 0;
     }
 }

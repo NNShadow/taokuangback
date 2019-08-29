@@ -11,6 +11,8 @@ public class User {
 
     private Integer id;
 
+    private String token;
+
     /**
      * 学号
      */
@@ -181,5 +183,13 @@ public class User {
 
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

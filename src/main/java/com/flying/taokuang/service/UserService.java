@@ -21,10 +21,10 @@ public interface UserService {
 
     /**
      * 通过学生学号选择学生
-     * @param studentId
+     * @param id
      * @return
      */
-    User selectByStudentId(String studentId);
+    User selectById(int id);
 
     /**
      * 通过用户名选择学生
@@ -35,8 +35,8 @@ public interface UserService {
 
     /**
      * 更新
-     * @param record
+     * @param user
      * @return
      */
-    int update(User record);
+    int update(User user);
 }

@@ -1,12 +1,11 @@
 package com.flying.taokuang.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.flying.taokuang.dataobject.Content;
 import com.flying.taokuang.dataobject.User;
 import com.flying.taokuang.service.ContentService;
 import com.flying.taokuang.service.UserService;
 import com.flying.taokuang.utils.JwtUtil;
-import com.flying.taokuang.utils.PasswordEncryUtil;
+import com.flying.taokuang.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author NNShadow
@@ -41,6 +37,9 @@ public class UserController {
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String signUp(User user){
+        user.setRenz(0);
+        user.setMobilePhoneNumberVerified(0);
+        user.setEmailVerified(0);
         user.setCreatedDate(new Date());
         user.setUpdatedDate(new Date());
 
@@ -64,16 +63,15 @@ public class UserController {
      * 用户登陆
      * @param user
      * @return
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public String login(User user) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public String login(User user) {
         JSONObject result = new JSONObject();
 
         if (!StringUtils.isBlank(user.getUsername()) && !StringUtils.isBlank(user.getPassword())){
             User userSearch = userService.selectByUsername(user.getUsername());
-            if (userSearch.getPassword().equals(PasswordEncryUtil.encodeByMd5(user.getPassword()))){
+            if (userSearch.getPassword().equals(MD5Util.md5(user.getPassword()))){
+                user.setId(userSearch.getId());
                 //生成token返回
                 String token = JwtUtil.getToken(user, "salt", 60 * 30);
                 result.put("msg", "生成token");
@@ -92,7 +90,7 @@ public class UserController {
     }
 
     /**
-     * 修改用户信息
+     * 修改用户信息，未加入输入起始密码
      * @param user
      * @return
      */
@@ -107,21 +105,22 @@ public class UserController {
             return result.toJSONString();
         }
 
-        user.setUpdatedDate(new Date());
         if (judgeUserNotFinish(user)){
             result.put("msg", "有信息空缺");
             result.put("success", false);
             return result.toJSONString();
         }
-        String userNewName = user.getUsername();
+
+        int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
+        String oldName = userService.selectById(userId).getUsername();
+        user.setId(userId);
         if (userService.update(user) != 0){
-            //修改每个商品对应的用户名
-            List<Content> contentList = contentService.selectByUsername((String) JwtUtil.getClamis(token, encry).get("username"));
-            contentList.stream().forEach(content -> {
-                content.setUpdatedDate(new Date());
-                content.setUsername(userNewName);
-                contentService.update(content);
-            });
+            //修改每个商品对应的用户名，存在问题
+//            List<Content> contentList = contentService.selectByUsername(oldName);
+//            contentList.stream().forEach(content -> {
+//                content.setUsername(userNewName);
+//                contentService.update(content);
+//            });
             String newToken = JwtUtil.getToken(user, "salt", 60 * 30);
             result.put("msg", "修改成功");
             result.put("success", true);

@@ -18,17 +18,17 @@ public interface UserMapper {
     int deleteById(Integer id);
 
     @Insert({
-        "insert into taokuang_user (id, studentId, ",
+        "insert into taokuang_user (studentId, ",
         "studentIdCard, authority, renz, ",
         "username, password, ",
         "picture, ",
         "mobilePhoneNumber, mobilePhoneNumberVerified, ",
         "email, emailVerified, ",
         "createdDate, updatedDate)",
-        "values (#{id,jdbcType=INTEGER}, #{studentId,jdbcType=VARCHAR}, ",
+        "values (#{studentId,jdbcType=VARCHAR}, ",
         "#{studentIdCard,jdbcType=VARCHAR}, #{authority,jdbcType=VARCHAR}, #{renz,jdbcType=INTEGER}, ",
         "#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
-        "#{token,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, ",
+        "#{picture,jdbcType=VARCHAR}, ",
         "#{mobilePhoneNumber,jdbcType=VARCHAR}, #{mobilePhoneNumberVerified,jdbcType=INTEGER}, ",
         "#{email,jdbcType=VARCHAR}, #{emailVerified,jdbcType=INTEGER}, ",
         "#{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP})"
@@ -40,7 +40,7 @@ public interface UserMapper {
         "id, studentId, studentIdCard, authority, renz, username, password, picture, mobilePhoneNumber, ",
         "mobilePhoneNumberVerified, email, emailVerified, createdDate, updatedDate",
         "from taokuang_user",
-        "where studentId = #{studentId,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=INTEGER}"
     })
     @Results(id = "use", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
@@ -58,7 +58,7 @@ public interface UserMapper {
         @Result(column="createdDate", property="createdDate", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="updatedDate", property="updatedDate", jdbcType=JdbcType.TIMESTAMP)
     })
-    User selectByStudentId(String studentId);
+    User selectById(int id);
 
     @Select({
             "select",
@@ -74,18 +74,13 @@ public interface UserMapper {
         "update taokuang_user",
         "set studentId = #{studentId,jdbcType=VARCHAR},",
           "studentIdCard = #{studentIdCard,jdbcType=VARCHAR},",
-          "authority = #{authority,jdbcType=VARCHAR},",
-          "renz = #{renz,jdbcType=INTEGER},",
           "username = #{username,jdbcType=VARCHAR},",
           "password = #{password,jdbcType=VARCHAR},",
           "picture = #{picture,jdbcType=VARCHAR},",
           "mobilePhoneNumber = #{mobilePhoneNumber,jdbcType=VARCHAR},",
-          "mobilePhoneNumberVerified = #{mobilePhoneNumberVerified,jdbcType=INTEGER},",
           "email = #{email,jdbcType=VARCHAR},",
-          "emailVerified = #{emailVerified,jdbcType=INTEGER},",
-          "createdDate = #{createdDate,jdbcType=TIMESTAMP},",
           "updatedDate = #{updatedDate,jdbcType=TIMESTAMP}",
         "where id = #{id,jdbcType=INTEGER}"
     })
-    int update(User record);
+    int update(User user);
 }
