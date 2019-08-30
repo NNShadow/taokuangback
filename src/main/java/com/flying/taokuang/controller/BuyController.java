@@ -74,6 +74,16 @@ public class BuyController {
             return result.toJSONString();
         }
 
-        return "";
+        Content content = contentService.selectById(contentId);
+        if (!StringUtils.isBlank(content.getBuyer()) && content.getBuy() == 1){
+            content.setGezi(1);
+            contentService.update(content);
+            result.put("msg", "鸽了");
+            result.put("success", true);
+            return result.toJSONString();
+        }
+        result.put("msg", "鸽失败了");
+        result.put("success", false);
+        return result.toJSONString();
     }
 }
