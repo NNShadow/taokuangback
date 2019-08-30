@@ -29,6 +29,13 @@ public interface CommentService {
     List<Comment> selectByContentGoodsId(Integer contentGoodsId);
 
     /**
+     * 通过评论人查找
+     * @param contentCommenter
+     * @return
+     */
+    List<Comment> selectByContentCommenter(String contentCommenter);
+
+    /**
      * 更新
      * @param record
      * @return

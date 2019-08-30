@@ -4,6 +4,7 @@ import com.flying.taokuang.dataobject.Comment;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -34,7 +35,7 @@ public interface CommentMapper {
         "from taokuang_comment",
         "where contentGoodsId = #{contentGoodsId,jdbcType=INTEGER}"
     })
-    @Results({
+    @Results(id = "use", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="contentGoodsId", property="contentGoodsId", jdbcType=JdbcType.INTEGER),
         @Result(column="contentCommenter", property="contentCommenter", jdbcType=JdbcType.VARCHAR),
@@ -43,6 +44,15 @@ public interface CommentMapper {
         @Result(column="updatedDate", property="updatedDate", jdbcType=JdbcType.TIMESTAMP)
     })
     List<Comment> selectByContentGoodsId(Integer contentGoodsId);
+
+    @Select({
+            "select",
+            "id, contentGoodsId, contentCommenter, content, createdDate, updatedDate",
+            "from taokuang_comment",
+            "where contentCommenter = #{contentCommenter,jdbcType=VARCHAR}"
+    })
+    @ResultMap("use")
+    List<Comment> selectByContentCommenter(String contentCommenter);
 
     @Update({
         "update taokuang_comment",
@@ -53,5 +63,5 @@ public interface CommentMapper {
           "updatedDate = #{updatedDate,jdbcType=TIMESTAMP}",
         "where id = #{id,jdbcType=INTEGER}"
     })
-    int update(Comment record);
+    int update(Comment comment);
 }

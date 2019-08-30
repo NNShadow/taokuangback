@@ -33,6 +33,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public List<Comment> selectByContentCommenter(String contentCommenter) {
+        return commentMapper.selectByContentCommenter(contentCommenter);
+    }
+
+    @Override
     public int update(Comment record) {
         return commentMapper.update(record);
     }

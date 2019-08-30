@@ -1,7 +1,10 @@
 package com.flying.taokuang.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.flying.taokuang.dataobject.Comment;
+import com.flying.taokuang.dataobject.Content;
 import com.flying.taokuang.dataobject.User;
+import com.flying.taokuang.service.CommentService;
 import com.flying.taokuang.service.ContentService;
 import com.flying.taokuang.service.UserService;
 import com.flying.taokuang.utils.JwtUtil;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author NNShadow
@@ -29,6 +33,9 @@ public class UserController {
 
     @Autowired
     private ContentService contentService;
+
+    @Autowired
+    private CommentService commentService;
 
     /**
      * 用户注册
@@ -117,16 +124,20 @@ public class UserController {
         String oldName = userService.selectById(userId).getUsername();
         user.setId(userId);
         if (userService.update(user, oldPassword, oldName) != 0){
-            //修改每个商品对应的用户名，存在问题
-//            List<Content> contentList = contentService.selectByUsername(oldName);
-//            contentList.stream().forEach(content -> {
-//                content.setUsername(userNewName);
-//                contentService.update(content);
-//            });
-            String newToken = JwtUtil.getToken(user, "salt", 60 * 30);
+            //修改每个商品对应的用户名
+            List<Content> contentList = contentService.selectByUsername(oldName);
+            contentList.stream().forEach(content -> {
+                content.setUsername(user.getUsername());
+                contentService.update(content);
+            });
+            //修改每个评论对应的用户名
+            List<Comment> commentList = commentService.selectByContentCommenter(oldName);
+            commentList.stream().forEach(comment -> {
+                comment.setContentCommenter(user.getUsername());
+                commentService.update(comment);
+            });
             result.put("msg", "修改成功");
             result.put("success", true);
-            result.put("token", newToken);
             return result.toJSONString();
         }else {
             result.put("msg", "修改失败");
