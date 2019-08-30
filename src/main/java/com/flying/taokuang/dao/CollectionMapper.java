@@ -14,6 +14,13 @@ import java.util.List;
 
 public interface CollectionMapper {
     @Delete({
+            "delete from taokuang_collection",
+            "where collectionId = #{collectionId,jdbcType=INTEGER}"
+
+    })
+    int deleteByCollectionId(int collectionId);
+
+    @Delete({
         "delete from taokuang_collection",
         "where collectorId = #{collectorId,jdbcType=INTEGER} and collectionId = #{collectionId,jdbcType=INTEGER}"
 

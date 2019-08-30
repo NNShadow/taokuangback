@@ -29,6 +29,13 @@ public interface ContentService {
     List<Content> selectByUsername(String username);
 
     /**
+     * 根据id查询商品
+     * @param id
+     * @return
+     */
+    Content selectById(int id);
+
+    /**
      * 查询全部商品
      * @return
      */
@@ -54,4 +61,12 @@ public interface ContentService {
      * @return
      */
     List<Content> selectByKeyword(String keyword);
+
+    /**
+     * 购买
+     * @param content
+     * @param username
+     * @return
+     */
+    int buy(Content content, String username);
 }

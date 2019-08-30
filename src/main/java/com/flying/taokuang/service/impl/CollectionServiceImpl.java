@@ -21,6 +21,12 @@ public class CollectionServiceImpl implements CollectionService {
     @Autowired
     private ContentMapper contentMapper;
 
+
+    @Override
+    public int deleteByCollectionId(int collectionId) {
+        return collectionMapper.deleteByCollectionId(collectionId);
+    }
+
     @Override
     public int deleteByUserIdAndCollectionId(Integer userId, Integer collectionId) {
         return collectionMapper.deleteByUserIdAndCollectionId(userId, collectionId);

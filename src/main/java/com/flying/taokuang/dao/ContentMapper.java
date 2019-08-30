@@ -65,7 +65,8 @@ public interface ContentMapper {
         "select",
         "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
         "buy, place, context, createdDate, updatedDate",
-        "from taokuang_content"
+        "from taokuang_content",
+        "where buy = 0"
     })
     @ResultMap("use")
     List<Content> selectAll();
@@ -85,7 +86,8 @@ public interface ContentMapper {
             "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
             "buy, place, context, createdDate, updatedDate",
             "from taokuang_content",
-            "where type = #{type,jdbcType=VARCHAR}"
+            "where type = #{type,jdbcType=VARCHAR}",
+            "and buy = 0"
     })
     @ResultMap("use")
     List<Content> selectByType(String type);
@@ -95,7 +97,8 @@ public interface ContentMapper {
             "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
             "buy, place, context, createdDate, updatedDate",
             "from taokuang_content",
-            "where title like #{title,jdbcType=VARCHAR}"
+            "where title like #{title,jdbcType=VARCHAR}",
+            "and buy = 0"
     })
     @ResultMap("use")
     List<Content> selectByKeyword(String keyword);
@@ -114,7 +117,6 @@ public interface ContentMapper {
           "buy = #{buy,jdbcType=INTEGER},",
           "place = #{place,jdbcType=VARCHAR},",
           "context = #{context,jdbcType=VARCHAR},",
-          "createdDate = #{createdDate,jdbcType=TIMESTAMP},",
           "updatedDate = #{updatedDate,jdbcType=TIMESTAMP}",
         "where id = #{id,jdbcType=INTEGER}"
     })

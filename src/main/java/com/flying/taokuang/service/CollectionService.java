@@ -9,7 +9,14 @@ import java.util.List;
 public interface CollectionService {
 
     /**
-     * 通过 id 删除
+     * 通过 收藏品 id 删除
+     * @param collectionId
+     * @return
+     */
+    int deleteByCollectionId(int collectionId);
+
+    /**
+     * 通过 收藏者id 和 收藏品 id 删除
      * @param userId
      * @param collectionId
      * @return

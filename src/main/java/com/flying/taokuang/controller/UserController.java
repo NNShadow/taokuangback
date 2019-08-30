@@ -47,6 +47,7 @@ public class UserController {
         user.setRenz(0);
         user.setMobilePhoneNumberVerified(0);
         user.setEmailVerified(0);
+        user.setAuthority("user");
         user.setCreatedDate(new Date());
         user.setUpdatedDate(new Date());
 
@@ -106,7 +107,6 @@ public class UserController {
                          @RequestParam(value = "token", required = false) String token,
                          @RequestParam(value = "oldPassword", required = false) String oldPassword){
         JSONObject result = new JSONObject();
-
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
             result.put("msg", "token错误");
