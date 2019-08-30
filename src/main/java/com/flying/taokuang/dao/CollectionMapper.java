@@ -15,16 +15,16 @@ import java.util.List;
 public interface CollectionMapper {
     @Delete({
         "delete from taokuang_collection",
-        "where userId = #{collectorId,jdbcType=INTEGER} and collectionId = #{collectionId,jdbcType=INTEGER}"
+        "where collectorId = #{collectorId,jdbcType=INTEGER} and collectionId = #{collectionId,jdbcType=INTEGER}"
 
     })
-    int deleteByUserIdAndCollectionId(Integer userId, Integer collectionId);
+    int deleteByUserIdAndCollectionId(Integer collectorId, Integer collectionId);
 
     @Insert({
         "insert into taokuang_collection (collectorId, ",
         "collectionId, collectionNum, ",
         "createdDate, updateDate)",
-        "values (#{collecter,jdbcType=VARCHAR}, ",
+        "values (#{collectorId,jdbcType=INTEGER}, ",
         "#{collectionId,jdbcType=INTEGER}, #{collectionNum,jdbcType=INTEGER}, ",
         "#{createdDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP})"
     })
@@ -34,7 +34,7 @@ public interface CollectionMapper {
         "select",
         "id, collectorId, collectionId, collectionNum, createdDate, updateDate",
         "from taokuang_collection",
-        "where collectionName = #{collectionName,jdbcType=INTEGER}"
+        "where collectionId = #{collectionId,jdbcType=INTEGER}"
     })
     @Results(id = "use", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
@@ -44,7 +44,7 @@ public interface CollectionMapper {
         @Result(column="createdDate", property="createdDate", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="updateDate", property="updateDate", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<Collection> selectByCollectionId(String CollectionId);
+    List<Collection> selectByCollectionId(int collectionId);
 
     @Select({
             "select",
@@ -54,6 +54,16 @@ public interface CollectionMapper {
     })
     @ResultMap("use")
     List<Collection> selectByCollectorId(int collectorId);
+
+    @Select({
+            "select",
+            "id, collectorId, collectionId, collectionNum, createdDate, updateDate",
+            "from taokuang_collection",
+            "where collectionId = #{collectionId,jdbcType=INTEGER}",
+            "and collectorId = #{collectorId,jdbcType=INTEGER}"
+    })
+    @ResultMap("use")
+    Collection selectByCollectionIdAndCollectorId(int collectionId, int collectorId);
 
     @Update({
         "update taokuang_collection",

@@ -40,7 +40,7 @@ public class CollectionController {
             result.put("success", false);
             return result.toJSONString();
         }
-        int collectorId = (int) JwtUtil.getClamis(token, encry).get("id");
+        int collectorId = (int) JwtUtil.getClamis(token, encry).get("userId");
         List<Collection> collectionList = collectionService.selectByCollectorId(collectorId);
         result.put("collectionList", collectionList);
         result.put("msg", "token错误");
@@ -54,9 +54,9 @@ public class CollectionController {
      * @param collectionId
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/add", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String add(@RequestParam(value = "token",required = false) String token,
-                      @RequestParam(value = "collectionId", required = false) int collectionId){
+                      @RequestParam(value = "collectionId") int collectionId){
         JSONObject result = new JSONObject();
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
@@ -65,18 +65,19 @@ public class CollectionController {
             return result.toJSONString();
         }
 
-        if (collectionId != 0){
+        if (collectionId >= 0){
             Collection collection = new Collection();
             //获取评论者id
-            int userId = (int) JwtUtil.getClamis(token, encry).get("id");
+            int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
             collection.setCollectionId(collectionId);
             collection.setCollectorId(userId);
             collection.setCreatedDate(new Date());
             collection.setUpdateDate(new Date());
-            collectionService.insert(collection);
-            result.put("msg", "收集成功");
-            result.put("success", true);
-            return result.toJSONString();
+            if (collectionService.insert(collection) == 1){
+                result.put("msg", "收集成功");
+                result.put("success", true);
+                return result.toJSONString();
+            }
         }
         result.put("msg", "收集失败");
         result.put("success", false);
@@ -91,7 +92,7 @@ public class CollectionController {
      */
     @RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String delete(@RequestParam(value = "token",required = false) String token,
-                         @RequestParam(value = "collectionId", required = false) int collectionId){
+                         @RequestParam(value = "collectionId") int collectionId){
         JSONObject result = new JSONObject();
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
@@ -100,9 +101,9 @@ public class CollectionController {
             return result.toJSONString();
         }
 
-        if (collectionId != 0){
+        if (collectionId >= 0){
             //获取评论者id，修改评论者
-            int userId = (int) JwtUtil.getClamis(token, encry).get("id");
+            int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
             collectionService.deleteByUserIdAndCollectionId(userId, collectionId);
             result.put("msg", "取消收藏成功");
             result.put("success", true);
