@@ -131,4 +131,9 @@ public class ContentController {
         content.setBusiness(0);
         return content;
     }
+
+    @RequestMapping(value = "/buy", method = RequestMethod.GET,  produces = "application/json; charset=UTF-8")
+    public String buy(){
+        return "";
+    }
 }

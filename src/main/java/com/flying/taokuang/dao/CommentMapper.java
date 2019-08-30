@@ -1,7 +1,5 @@
 package com.flying.taokuang.dao;
 
-import java.util.List;
-
 import com.flying.taokuang.dataobject.Comment;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -10,6 +8,8 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.type.JdbcType;
+
+import java.util.List;
 
 public interface CommentMapper {
     @Delete({
@@ -32,7 +32,7 @@ public interface CommentMapper {
         "select",
         "id, contentGoodsId, contentCommenter, content, createdDate, updatedDate",
         "from taokuang_comment",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where contentGoodsId = #{contentGoodsId,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
