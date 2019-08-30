@@ -95,7 +95,9 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/modify", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public String modify(User user, @RequestParam(value = "token", required = false) String token){
+    public String modify(User user,
+                         @RequestParam(value = "token", required = false) String token,
+                         @RequestParam(value = "oldPassword", required = false) String oldPassword){
         JSONObject result = new JSONObject();
 
         //验证token
@@ -105,7 +107,7 @@ public class UserController {
             return result.toJSONString();
         }
 
-        if (judgeUserNotFinish(user)){
+        if (judgeUserNotFinish(user) || StringUtils.isBlank(oldPassword)){
             result.put("msg", "有信息空缺");
             result.put("success", false);
             return result.toJSONString();
@@ -114,7 +116,7 @@ public class UserController {
         int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
         String oldName = userService.selectById(userId).getUsername();
         user.setId(userId);
-        if (userService.update(user) != 0){
+        if (userService.update(user, oldPassword, oldName) != 0){
             //修改每个商品对应的用户名，存在问题
 //            List<Content> contentList = contentService.selectByUsername(oldName);
 //            contentList.stream().forEach(content -> {

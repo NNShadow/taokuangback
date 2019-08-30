@@ -36,7 +36,9 @@ public interface UserService {
     /**
      * 更新
      * @param user
+     * @param oldPassword
+     * @param oldName
      * @return
      */
-    int update(User user);
+    int update(User user, String oldPassword, String oldName);
 }
