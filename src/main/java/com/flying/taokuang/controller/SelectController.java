@@ -1,7 +1,9 @@
 package com.flying.taokuang.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.flying.taokuang.dataobject.User;
 import com.flying.taokuang.service.ContentService;
+import com.flying.taokuang.service.UserService;
 import com.flying.taokuang.utils.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SelectController {
     private final static String encry = "salt";
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ContentService contentService;
@@ -51,10 +56,11 @@ public class SelectController {
             return result.toJSONString();
         }
 
-        String username = (String) JwtUtil.getClamis(token, encry).get("username");
+        int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
+        User user = userService.selectById(userId);
         result.put("msg", "我的商品");
         result.put("success", true);
-        result.put("contentList", contentService.selectByUsername(username));
+        result.put("contentList", contentService.selectByUsername(user.getUsername()));
         return result.toJSONString();
     }
 
