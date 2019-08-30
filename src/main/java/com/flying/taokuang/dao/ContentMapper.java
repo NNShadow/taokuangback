@@ -20,25 +20,25 @@ public interface ContentMapper {
     int deleteById(Integer id);
 
     @Insert({
-        "insert into taokuang_content (id, username, ",
+        "insert into taokuang_content (username, ",
         "goodspic, gezi, ",
         "buyer, title, contact, ",
         "type, money, business, ",
-        "buy, where, context, ",
+        "buy, place, context, ",
         "createdDate, updatedDate)",
-        "values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, ",
+        "values (#{username,jdbcType=VARCHAR}, ",
         "#{goodsPic,jdbcType=VARCHAR}, #{gezi,jdbcType=INTEGER}, ",
         "#{buyer,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, ",
         "#{type,jdbcType=VARCHAR}, #{money,jdbcType=VARCHAR}, #{business,jdbcType=INTEGER}, ",
-        "#{buy,jdbcType=INTEGER}, #{where,jdbcType=VARCHAR}, #{context,jdbcType=VARCHAR}, ",
+        "#{buy,jdbcType=INTEGER}, #{place,jdbcType=VARCHAR}, #{context,jdbcType=VARCHAR}, ",
         "#{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP})"
     })
-    int insert(Content record);
+    int insert(Content content);
 
     @Select({
         "select",
         "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
-        "buy, where, context, createdDate, updatedDate",
+        "buy, place, context, createdDate, updatedDate",
         "from taokuang_content",
         "where username = #{username,jdbcType=VARCHAR}"
     })
@@ -54,7 +54,7 @@ public interface ContentMapper {
         @Result(column="money", property="money", jdbcType=JdbcType.VARCHAR),
         @Result(column="business", property="business", jdbcType=JdbcType.INTEGER),
         @Result(column="buy", property="buy", jdbcType=JdbcType.INTEGER),
-        @Result(column="where", property="where", jdbcType=JdbcType.VARCHAR),
+        @Result(column="place", property="place", jdbcType=JdbcType.VARCHAR),
         @Result(column="context", property="context", jdbcType=JdbcType.VARCHAR),
         @Result(column="createdDate", property="createdDate", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="updatedDate", property="updatedDate", jdbcType=JdbcType.TIMESTAMP)
@@ -64,7 +64,7 @@ public interface ContentMapper {
     @Select({
         "select",
         "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
-        "buy, where, context, createdDate, updatedDate",
+        "buy, place, context, createdDate, updatedDate",
         "from taokuang_content"
     })
     @ResultMap("use")
@@ -73,7 +73,7 @@ public interface ContentMapper {
     @Select({
             "select",
             "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
-            "buy, where, context, createdDate, updatedDate",
+            "buy, place, context, createdDate, updatedDate",
             "from taokuang_content",
             "where type = #{type,jdbcType=VARCHAR}"
     })
@@ -83,7 +83,7 @@ public interface ContentMapper {
     @Select({
             "select",
             "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
-            "buy, where, context, createdDate, updatedDate",
+            "buy, place, context, createdDate, updatedDate",
             "from taokuang_content",
             "where title like #{title,jdbcType=VARCHAR}"
     })
@@ -102,11 +102,11 @@ public interface ContentMapper {
           "money = #{money,jdbcType=VARCHAR},",
           "business = #{business,jdbcType=INTEGER},",
           "buy = #{buy,jdbcType=INTEGER},",
-          "where = #{where,jdbcType=VARCHAR},",
+          "place = #{place,jdbcType=VARCHAR},",
           "context = #{context,jdbcType=VARCHAR},",
           "createdDate = #{createdDate,jdbcType=TIMESTAMP},",
           "updatedDate = #{updatedDate,jdbcType=TIMESTAMP}",
         "where id = #{id,jdbcType=INTEGER}"
     })
-    int update(Content record);
+    int update(Content content);
 }

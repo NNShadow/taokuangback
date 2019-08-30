@@ -62,7 +62,7 @@ public class Content {
     /**
      * 位置
      */
-    private String where;
+    private String place;
 
     /**
      * 描述
@@ -161,12 +161,12 @@ public class Content {
         this.buy = buy;
     }
 
-    public String getWhere() {
-        return where;
+    public String getPlace() {
+        return place;
     }
 
-    public void setWhere(String where) {
-        this.where = where;
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public String getContext() {

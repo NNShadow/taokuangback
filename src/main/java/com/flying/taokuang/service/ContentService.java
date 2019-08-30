@@ -16,10 +16,10 @@ public interface ContentService {
 
     /**
      * 添加商品
-     * @param record
+     * @param content
      * @return
      */
-    int insert(Content record);
+    int insert(Content content);
 
     /**
      * 根据用户名查询商品

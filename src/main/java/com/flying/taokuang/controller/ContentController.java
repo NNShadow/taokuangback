@@ -3,6 +3,7 @@ package com.flying.taokuang.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.flying.taokuang.dataobject.Content;
 import com.flying.taokuang.service.ContentService;
+import com.flying.taokuang.service.UserService;
 import com.flying.taokuang.utils.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class ContentController {
     @Autowired
     private ContentService contentService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 添加商品，未加判空
      * @param content
@@ -42,7 +46,10 @@ public class ContentController {
         }
         if (content != null){
             content.setCreatedDate(new Date());
-            content.setUpdatedDate(new Date());
+            content = contentInit(content);
+            //获取发布者姓名
+            String username = userService.selectById((int) JwtUtil.getClamis(token, encry).get("userId")).getUsername();
+            content.setUsername(username);
             if (contentService.insert(content) != 0){
                 result.put("msg", "添加成功");
                 result.put("success", true);
@@ -55,7 +62,7 @@ public class ContentController {
     }
 
     /**
-     * 删除商品，未加判空，判断所属
+     * 删除商品，未加判空，未判断所属
      * @param contentId
      * @param token
      * @return
@@ -97,7 +104,10 @@ public class ContentController {
             return result.toJSONString();
         }
         if (content != null){
-            content.setUpdatedDate(new Date());
+            content = contentInit(content);
+            //获取发布者姓名
+            String username = userService.selectById((int) JwtUtil.getClamis(token, encry).get("userId")).getUsername();
+            content.setUsername(username);
             if (contentService.update(content) != 0){
                 result.put("msg", "修改成功");
                 result.put("success", true);
@@ -109,4 +119,16 @@ public class ContentController {
         return result.toJSONString();
     }
 
+    /**
+     * 初始化商品信息
+     * @param content
+     * @return
+     */
+    public Content contentInit(Content content){
+        content.setUpdatedDate(new Date());
+        content.setGezi(0);
+        content.setBuy(0);
+        content.setBusiness(0);
+        return content;
+    }
 }

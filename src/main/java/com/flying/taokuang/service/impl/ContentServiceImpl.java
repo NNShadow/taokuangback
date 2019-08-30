@@ -23,8 +23,8 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public int insert(Content record) {
-        return contentMapper.insert(record);
+    public int insert(Content content) {
+        return contentMapper.insert(content);
     }
 
     @Override
