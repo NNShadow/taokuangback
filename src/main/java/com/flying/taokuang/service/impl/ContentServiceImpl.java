@@ -34,6 +34,11 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
+    public List<Content> selectByBuyer(String buyer) {
+        return contentMapper.selectByBuyer(buyer);
+    }
+
+    @Override
     public Content selectById(int id) {
         return contentMapper.selectById(id);
     }

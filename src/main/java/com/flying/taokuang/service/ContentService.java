@@ -29,6 +29,13 @@ public interface ContentService {
     List<Content> selectByUsername(String username);
 
     /**
+     * 根据买家查询商品
+     * @param buyer
+     * @return
+     */
+    List<Content> selectByBuyer(String buyer);
+
+    /**
      * 根据id查询商品
      * @param id
      * @return

@@ -18,7 +18,7 @@ public class JwtUtil {
      * @param minutes
      * @return
      */
-    public static String getToken(User user, String encryKey, int minutes){
+    public static String getToken(User user, String encryKey, long minutes){
         long currentTime = System.currentTimeMillis();
         Map<String, Object> map = new HashMap<>();
         map.put("userId", user.getId());
@@ -40,17 +40,14 @@ public class JwtUtil {
      * @return
      */
     public static boolean isExpiration(String token, String encryKey){
-        try {
+//        try {
             long currentTime = System.currentTimeMillis();
-            if (Jwts.parser().setSigningKey(encryKey).parseClaimsJws(token).getBody().getExpiration().after(new Date(currentTime - 1000 * 60))){
+            if (Jwts.parser().setSigningKey(encryKey).parseClaimsJws(token).getBody().getExpiration().after(new Date(currentTime))){
                 return true;
             }else {
                 return false;
             }
-        }catch (Exception e){
-            System.out.println("异常");
-            return false;
-        }
+//        }catch (Exception e){
     }
 
     /**

@@ -81,7 +81,7 @@ public class UserController {
             if (userSearch.getPassword().equals(MD5Util.md5(user.getPassword()))){
                 user.setId(userSearch.getId());
                 //生成token返回
-                String token = JwtUtil.getToken(user, "salt", 60 * 30);
+                String token = JwtUtil.getToken(user, "salt", 60 * 24 * 30);
                 result.put("msg", "生成token");
                 result.put("token", token);
                 result.put("success", true);
@@ -98,7 +98,7 @@ public class UserController {
     }
 
     /**
-     * 修改用户信息，未加入输入起始密码
+     * 修改用户信息
      * @param user
      * @return
      */
@@ -135,6 +135,12 @@ public class UserController {
             commentList.stream().forEach(comment -> {
                 comment.setContentCommenter(user.getUsername());
                 commentService.update(comment);
+            });
+            //修改商品对应的购买者名字
+            List<Content> contentBuyerList = contentService.selectByBuyer(oldName);
+            contentBuyerList.stream().forEach(content -> {
+                content.setBuyer(user.getUsername());
+                contentService.update(content);
             });
             result.put("msg", "修改成功");
             result.put("success", true);

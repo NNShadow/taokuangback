@@ -86,6 +86,16 @@ public interface ContentMapper {
             "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
             "buy, place, context, createdDate, updatedDate",
             "from taokuang_content",
+            "where buyer = #{buyer,jdbcType=VARCHAR}"
+    })
+    @ResultMap("use")
+    List<Content> selectByBuyer(String buyer);
+
+    @Select({
+            "select",
+            "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
+            "buy, place, context, createdDate, updatedDate",
+            "from taokuang_content",
             "where type = #{type,jdbcType=VARCHAR}",
             "and buy = 0"
     })
