@@ -91,7 +91,12 @@ public class SelectController {
         return result.toJSONString();
     }
 
-    //根据关键词，模糊搜索
+    /**
+     * 模糊搜索
+     * @param token
+     * @param keyword
+     * @return
+     */
     @RequestMapping(value = "/keyword", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String search(@RequestParam(value = "token", required = false) String token, @RequestParam(value = "keyword") String keyword){
         JSONObject result = new JSONObject();

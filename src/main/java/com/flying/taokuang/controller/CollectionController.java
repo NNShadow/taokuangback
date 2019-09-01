@@ -53,7 +53,7 @@ public class CollectionController {
      * @param token
      * @param collectionId
      * @return
-     */
+             */
     @RequestMapping(value = "/add", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String add(@RequestParam(value = "token",required = false) String token,
                       @RequestParam(value = "collectionId") int collectionId){
