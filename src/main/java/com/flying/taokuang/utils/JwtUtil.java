@@ -40,14 +40,16 @@ public class JwtUtil {
      * @return
      */
     public static boolean isExpiration(String token, String encryKey){
-//        try {
+        try {
             long currentTime = System.currentTimeMillis();
             if (Jwts.parser().setSigningKey(encryKey).parseClaimsJws(token).getBody().getExpiration().after(new Date(currentTime))){
                 return true;
             }else {
                 return false;
             }
-//        }catch (Exception e){
+        }catch (Exception e){
+            return false;
+        }
     }
 
     /**
