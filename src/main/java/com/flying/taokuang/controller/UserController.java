@@ -39,7 +39,7 @@ public class UserController {
 
     /**
      * 用户注册
-     * @param user
+     * @param user 实例化（用户）
      * @return
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
@@ -69,7 +69,7 @@ public class UserController {
 
     /**
      * 用户登陆
-     * @param user
+     * @param user 实例化（用户）
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
@@ -99,7 +99,7 @@ public class UserController {
 
     /**
      * 修改用户信息
-     * @param user
+     * @param user 实例化（用户）
      * @return
      */
     @RequestMapping(value = "/modify", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")

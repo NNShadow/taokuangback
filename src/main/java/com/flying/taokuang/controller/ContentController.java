@@ -31,7 +31,7 @@ public class ContentController {
 
     /**
      * 添加商品，未加判空
-     * @param content
+     * @param content 实例化（商品）
      * @param token
      * @return
      */
@@ -63,7 +63,7 @@ public class ContentController {
 
     /**
      * 删除商品，未加判空，未判断所属
-     * @param contentId
+     * @param contentId 商品id
      * @param token
      * @return
      */
@@ -90,7 +90,7 @@ public class ContentController {
 
     /**
      * 修改商品，未加判空
-     * @param content
+     * @param content 实例化（商品）
      * @param token
      * @return
      */
@@ -121,7 +121,7 @@ public class ContentController {
 
     /**
      * 初始化商品信息
-     * @param content
+     * @param content 实例化（商品）
      * @return
      */
     public Content contentInit(Content content){

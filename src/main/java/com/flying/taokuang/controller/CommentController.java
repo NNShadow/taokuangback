@@ -33,7 +33,7 @@ public class CommentController {
 
     /**
      * 添加商品评论
-     * @param comment
+     * @param comment 实例化（评论）
      * @param token
      * @return
      */
@@ -67,7 +67,7 @@ public class CommentController {
 
     /**
      * 根据商品查找评论
-     * @param contentGoodsId
+     * @param contentGoodsId 商品id
      * @param token
      * @return
      */

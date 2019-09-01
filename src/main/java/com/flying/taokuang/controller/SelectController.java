@@ -67,7 +67,7 @@ public class SelectController {
     /**
      * 按商品名称搜索
      * @param token
-     * @param type
+     * @param type 商品类型
      * @return
      */
     @RequestMapping(value = "/type", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
@@ -94,7 +94,7 @@ public class SelectController {
     /**
      * 模糊搜索
      * @param token
-     * @param keyword
+     * @param keyword 关键词
      * @return
      */
     @RequestMapping(value = "/keyword", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")

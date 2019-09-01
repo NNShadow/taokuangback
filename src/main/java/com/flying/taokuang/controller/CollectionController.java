@@ -51,7 +51,7 @@ public class CollectionController {
     /**
      * 收藏
      * @param token
-     * @param collectionId
+     * @param collectionId 收藏品id（物品id）
      * @return
              */
     @RequestMapping(value = "/add", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
@@ -87,7 +87,7 @@ public class CollectionController {
     /**
      * 取消收藏
      * @param token
-     * @param collectionId
+     * @param collectionId 收藏品id（物品id）
      * @return
      */
     @RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")

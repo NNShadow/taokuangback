@@ -35,7 +35,7 @@ public class BuyController {
     /**
      * 购买
      * @param token
-     * @param contentId
+     * @param contentId 商品id
      * @return
      */
     @RequestMapping(value = "/buy", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
@@ -63,6 +63,12 @@ public class BuyController {
         return result.toJSONString();
     }
 
+    /**
+     * 鸽子
+     * @param token
+     * @param contentId 商品id
+     * @return
+     */
     @RequestMapping(value = "/gezi", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String gezi(@RequestParam(value = "token", required = false) String token,
                        @RequestParam(value = "contentId") int contentId){
