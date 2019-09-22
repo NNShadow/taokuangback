@@ -2,8 +2,11 @@ package com.flying.taokuang.utils;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.flying.taokuang.aip.baidu.Base64Util;
+import com.flying.taokuang.aip.baidu.FileUtil;
 import com.flying.taokuang.aip.baidu.HttpUtil;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 
 /**
@@ -18,9 +21,15 @@ public class PictureUtil {
      * @param imgStr
      * @return
      */
-    public static String getStudentId(String imgStr){
+    public static String getStudentId(String imgStr) throws IOException {
+
+        String filePath = "C:\\Users\\Secluded Wind\\Desktop\\test.png";
+        byte[] imgData = FileUtil.readFileByBytes(filePath);
+        imgStr = Base64Util.encode(imgData);
+
+
         // 通用识别url
-        String otherHost = "https://aip.baidubce.com/rest/2.0/ocr/v1/general";
+        String otherHost = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic";
         try {
             String params = URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(imgStr, "UTF-8");
             /**
@@ -28,6 +37,7 @@ public class PictureUtil {
              */
             String accessToken = AccessTokenUtil.getAuth();//#####调用鉴权接口获取的token#####
             String result = HttpUtil.post(otherHost, accessToken, params);
+            result = PictureUtil.get(result);
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,7 +50,7 @@ public class PictureUtil {
      * @param result 识别的 json 数据
      * @return
      */
-    public String get(String result){
+    public static String get(String result){
 //        图片路径
 //        String filePath = "C:\\Users\\Secluded Wind\\Desktop\\test.png";
 //        将图片转为 Base64
@@ -55,4 +65,8 @@ public class PictureUtil {
         String studentId = (String) number.get("words");
         return studentId;
     }
+
+//    public static void main(String[] args) throws IOException {
+//        System.out.println(PictureUtil.getStudentId(""));
+//    }
 }
