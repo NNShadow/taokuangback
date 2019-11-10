@@ -44,7 +44,7 @@ public class UserController {
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String signUp(User user){
-        user.setRenz(0);
+        user.setAgree(0);
         user.setMobilePhoneNumberVerified(0);
         user.setEmailVerified(0);
         user.setAuthority("user");

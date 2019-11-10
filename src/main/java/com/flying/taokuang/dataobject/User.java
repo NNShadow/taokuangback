@@ -31,7 +31,7 @@ public class User {
     /**
      * 学生认证
      */
-    private Integer renz;
+    private Integer agree;
 
     /**
      * 使用者姓名
@@ -42,7 +42,6 @@ public class User {
      * 密码
      */
     private String password;
-
 
     /**
      * 头像
@@ -97,12 +96,12 @@ public class User {
         this.studentIdCard = studentIdCard;
     }
 
-    public Integer getRenz() {
-        return renz;
+    public Integer getAgree() {
+        return agree;
     }
 
-    public void setRenz(Integer renz) {
-        this.renz = renz;
+    public void setAgree(Integer agree) {
+        this.agree = agree;
     }
 
     public String getUsername() {

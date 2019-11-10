@@ -22,7 +22,7 @@ public class Content {
     /**
      * 鸽子
      */
-    private Integer gezi;
+    private Integer bird;
 
     /**
      * 买家
@@ -97,12 +97,12 @@ public class Content {
         this.goodsPic = goodsPic;
     }
 
-    public Integer getGezi() {
-        return gezi;
+    public Integer getBird() {
+        return bird;
     }
 
-    public void setGezi(Integer gezi) {
-        this.gezi = gezi;
+    public void setBird(Integer bird) {
+        this.bird = bird;
     }
 
     public String getBuyer() {

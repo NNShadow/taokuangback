@@ -126,7 +126,7 @@ public class ContentController {
      */
     public Content contentInit(Content content){
         content.setUpdatedDate(new Date());
-        content.setGezi(0);
+        content.setBird(0);
         content.setBuy(0);
         content.setBusiness(0);
         return content;
