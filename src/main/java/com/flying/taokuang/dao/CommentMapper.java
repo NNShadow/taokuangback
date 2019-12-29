@@ -29,6 +29,7 @@ public interface CommentMapper {
     })
     int insert(Comment record);
 
+    //TODO comment 1
     @Select({
         "select",
         "id, contentGoodsId, contentCommenter, content, createdDate, updatedDate",
@@ -45,6 +46,7 @@ public interface CommentMapper {
     })
     List<Comment> selectByContentGoodsId(Integer contentGoodsId);
 
+    //TODO comment 2
     @Select({
             "select",
             "id, contentGoodsId, contentCommenter, content, createdDate, updatedDate",
@@ -57,7 +59,7 @@ public interface CommentMapper {
     @Update({
         "update taokuang_comment",
         "set contentGoodsId = #{contentGoodsId,jdbcType=INTEGER},",
-          "contentCommenter = #{contentCommenter,jdbcType=VARCHAR},",
+          "contentCommenterId = #{contentCommenterId,jdbcType=INTEGER},",
           "content = #{content,jdbcType=VARCHAR},",
           "createdDate = #{createdDate,jdbcType=TIMESTAMP},",
           "updatedDate = #{updatedDate,jdbcType=TIMESTAMP}",

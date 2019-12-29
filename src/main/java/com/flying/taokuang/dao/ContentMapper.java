@@ -35,6 +35,7 @@ public interface ContentMapper {
     })
     int insert(Content content);
 
+    //TODO content 1
     @Select({
         "select",
         "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
@@ -61,6 +62,7 @@ public interface ContentMapper {
     })
     List<Content> selectByUserId(int userId);
 
+    //TODO content 2
     @Select({
         "select",
         "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
@@ -71,6 +73,7 @@ public interface ContentMapper {
     @ResultMap("use")
     List<Content> selectAll();
 
+    //TODO content 3
     @Select({
             "select",
             "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
@@ -81,6 +84,7 @@ public interface ContentMapper {
     @ResultMap("use")
     Content selectById(int id);
 
+    //TODO content 4
     @Select({
             "select",
             "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
@@ -91,6 +95,7 @@ public interface ContentMapper {
     @ResultMap("use")
     List<Content> selectByBuyerId(int buyerId);
 
+    //TODO content 5
     @Select({
             "select",
             "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
@@ -102,11 +107,12 @@ public interface ContentMapper {
     @ResultMap("use")
     List<Content> selectByType(String type);
 
+    //TODO content 6
     @Select({
             "select",
             "id, username, goodspic, gezi, buyer, title, contact, type, money, business, ",
             "buy, place, context, createdDate, updatedDate",
-            "from taokuang_content",
+            "from taokuang_content content",
             "where title like #{title,jdbcType=VARCHAR}",
             "and buy = 0"
     })
@@ -115,10 +121,10 @@ public interface ContentMapper {
 
     @Update({
         "update taokuang_content",
-        "set username = #{username,jdbcType=VARCHAR},",
+        "set userId = #{userId,jdbcType=INTEGER},",
           "goodspic = #{goodsPic,jdbcType=VARCHAR},",
           "gezi = #{gezi,jdbcType=INTEGER},",
-          "buyer = #{buyer,jdbcType=VARCHAR},",
+          "buyerId = #{buyerId,jdbcType=INTEGER},",
           "title = #{title,jdbcType=VARCHAR},",
           "contact = #{contact,jdbcType=VARCHAR},",
           "type = #{type,jdbcType=VARCHAR},",
