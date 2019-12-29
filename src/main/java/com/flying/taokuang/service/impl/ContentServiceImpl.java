@@ -3,7 +3,6 @@ package com.flying.taokuang.service.impl;
 import com.flying.taokuang.dao.ContentMapper;
 import com.flying.taokuang.dataobject.Content;
 import com.flying.taokuang.service.ContentService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,13 +28,13 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public List<Content> selectByUsername(String username) {
-        return contentMapper.selectByUsername(username);
+    public List<Content> selectByUserId(int userId) {
+        return contentMapper.selectByUserId(userId);
     }
 
     @Override
-    public List<Content> selectByBuyer(String buyer) {
-        return contentMapper.selectByBuyer(buyer);
+    public List<Content> selectByBuyerId(int buyerId) {
+        return contentMapper.selectByBuyerId(buyerId);
     }
 
     @Override
@@ -67,12 +66,13 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public int buy(Content content, String username) {
-        if (!StringUtils.isBlank(content.getBuyerId()) || content.getBuy() == 1){
+    public int buy(Content content, int userId) {
+        if (userId == 0 || content.getBuy() == 1) {
             return 0;
         }
-        content.setBuyerId(username);
+        content.setBuyerId(userId);
         content.setBuy(1);
-        return contentMapper.update(content);
+        return 1;
     }
+
 }

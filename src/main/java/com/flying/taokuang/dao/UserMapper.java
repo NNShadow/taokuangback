@@ -4,7 +4,6 @@ import com.flying.taokuang.dataobject.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -59,16 +58,6 @@ public interface UserMapper {
         @Result(column="updatedDate", property="updatedDate", jdbcType=JdbcType.TIMESTAMP)
     })
     User selectById(int id);
-
-    @Select({
-            "select",
-            "id, studentId, studentIdCard, authority, renz, username, password, picture, mobilePhoneNumber, ",
-            "mobilePhoneNumberVerified, email, emailVerified, createdDate, updatedDate",
-            "from taokuang_user",
-            "where username = #{username,jdbcType=INTEGER}"
-    })
-    @ResultMap("use")
-    User selectByUsername(String username);
 
     @Update({
         "update taokuang_user",

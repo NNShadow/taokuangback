@@ -20,25 +20,18 @@ public interface UserService {
     int insert(User user);
 
     /**
-     * 通过学生学号选择学生
+     * 通过学生 id 选择学生
      * @param id
      * @return
      */
     User selectById(int id);
 
     /**
-     * 通过用户名选择学生
-     * @param username
-     * @return
-     */
-    User selectByUsername(String username);
-
-    /**
      * 更新
      * @param user
      * @param oldPassword
-     * @param oldName
+     * @param oldId
      * @return
      */
-    int update(User user, String oldPassword, String oldName);
+    int update(User user, String oldPassword, int oldId);
 }

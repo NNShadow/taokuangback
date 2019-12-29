@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int insert(User user) {
         user.setPassword(MD5Util.md5(user.getPassword()));
-        if (userMapper.selectByUsername(user.getUsername()) == null){
+        if (userMapper.selectById(user.getId()) == null){
             return userMapper.insert(user);
         }
         return 0;
@@ -38,22 +38,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectByUsername(String username) {
-        return userMapper.selectByUsername(username);
-    }
-
-    @Override
-    public int update(User user, String oldPassword, String oldName) {
+    public int update(User user, String oldPassword, int oldId) {
         //判断旧密码
-        if (!MD5Util.md5(oldPassword).equals(userMapper.selectByUsername(oldName).getPassword())){
+        if (!MD5Util.md5(oldPassword).equals(userMapper.selectById(oldId).getPassword())){
+            return 0;
+        }
+        if(oldPassword.isEmpty()){
             return 0;
         }
         user.setPassword(MD5Util.md5(user.getPassword()));
         user.setUpdatedDate(new Date());
-        User select = userMapper.selectByUsername(user.getUsername());
-        if (select == null || select.getUsername().equals(user.getUsername())){
+        User newUser = userMapper.selectById(user.getId());
+        if (newUser == null || newUser.getUsername().equals(user.getUsername())){
             return userMapper.update(user);
         }
         return 0;
     }
+
 }

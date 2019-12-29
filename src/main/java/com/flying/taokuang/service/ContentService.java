@@ -22,18 +22,18 @@ public interface ContentService {
     int insert(Content content);
 
     /**
-     * 根据用户名查询商品
-     * @param username
+     * 根据用户 id 查询商品
+     * @param userId
      * @return
      */
-    List<Content> selectByUsername(String username);
+    List<Content> selectByUserId(int userId);
 
     /**
-     * 根据买家查询商品
-     * @param buyer
+     * 根据买家 id 查询商品
+     * @param buyerId
      * @return
      */
-    List<Content> selectByBuyer(String buyer);
+    List<Content> selectByBuyerId(int buyerId);
 
     /**
      * 根据id查询商品
@@ -72,8 +72,8 @@ public interface ContentService {
     /**
      * 购买
      * @param content
-     * @param username
+     * @param userId
      * @return
      */
-    int buy(Content content, String username);
+    int buy(Content content, int userId);
 }

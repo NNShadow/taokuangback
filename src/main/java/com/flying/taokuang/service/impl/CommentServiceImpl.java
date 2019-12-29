@@ -33,8 +33,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> selectByContentCommenter(String contentCommenter) {
-        return commentMapper.selectByContentCommenter(contentCommenter);
+    public List<Comment> selectByContentCommenterId(int contentCommenterId) {
+        return commentMapper.selectByContentCommenterId(contentCommenterId);
     }
 
     @Override

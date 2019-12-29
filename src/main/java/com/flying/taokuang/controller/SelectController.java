@@ -60,7 +60,7 @@ public class SelectController {
         User user = userService.selectById(userId);
         result.put("msg", "我的商品");
         result.put("success", true);
-        result.put("contentList", contentService.selectByUsername(user.getUsername()));
+        result.put("contentList", contentService.selectByUserId(user.getUsername()));
         return result.toJSONString();
     }
 

@@ -29,11 +29,11 @@ public interface CommentService {
     List<Comment> selectByContentGoodsId(Integer contentGoodsId);
 
     /**
-     * 通过评论人查找
-     * @param contentCommenter
+     * 通过评论人 id 查找
+     * @param contentCommenterId
      * @return
      */
-    List<Comment> selectByContentCommenter(String contentCommenter);
+    List<Comment> selectByContentCommenterId(int contentCommenterId);
 
     /**
      * 更新

@@ -52,7 +52,7 @@ public interface CommentMapper {
             "where contentCommenter = #{contentCommenter,jdbcType=VARCHAR}"
     })
     @ResultMap("use")
-    List<Comment> selectByContentCommenter(String contentCommenter);
+    List<Comment> selectByContentCommenterId(int contentCommenterId);
 
     @Update({
         "update taokuang_comment",

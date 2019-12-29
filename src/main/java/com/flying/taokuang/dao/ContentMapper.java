@@ -59,7 +59,7 @@ public interface ContentMapper {
         @Result(column="createdDate", property="createdDate", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="updatedDate", property="updatedDate", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<Content> selectByUsername(String username);
+    List<Content> selectByUserId(int userId);
 
     @Select({
         "select",
@@ -89,7 +89,7 @@ public interface ContentMapper {
             "where buyer = #{buyer,jdbcType=VARCHAR}"
     })
     @ResultMap("use")
-    List<Content> selectByBuyer(String buyer);
+    List<Content> selectByBuyerId(int buyerId);
 
     @Select({
             "select",
