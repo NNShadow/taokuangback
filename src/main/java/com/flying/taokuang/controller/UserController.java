@@ -127,19 +127,19 @@ public class UserController {
             //修改每个商品对应的用户名
             List<Content> contentList = contentService.selectByUsername(oldName);
             contentList.stream().forEach(content -> {
-                content.setUsername(user.getUsername());
+                content.setUserId(user.getUsername());
                 contentService.update(content);
             });
             //修改每个评论对应的用户名
             List<Comment> commentList = commentService.selectByContentCommenter(oldName);
             commentList.stream().forEach(comment -> {
-                comment.setContentCommenter(user.getUsername());
+                comment.setContentCommenterName(user.getUsername());
                 commentService.update(comment);
             });
             //修改商品对应的购买者名字
             List<Content> contentBuyerList = contentService.selectByBuyer(oldName);
             contentBuyerList.stream().forEach(content -> {
-                content.setBuyer(user.getUsername());
+                content.setBuyerId(user.getUsername());
                 contentService.update(content);
             });
             result.put("msg", "修改成功");

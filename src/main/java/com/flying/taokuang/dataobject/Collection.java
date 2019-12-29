@@ -1,12 +1,13 @@
 package com.flying.taokuang.dataobject;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 
  * @date 2019/08/24
  */
-public class Collection {
+public class Collection implements Common {
     private Integer id;
 
     /**
@@ -15,9 +16,19 @@ public class Collection {
     private int collectorId;
 
     /**
+     * 收藏者的名字
+     */
+    private String collectorName;
+
+    /**
      * 被收藏的物品
      */
     private int collectionId;
+
+    /**
+     * 被收藏的物品的名字
+     */
+    private String collectionName;
 
     /**
      * 被收藏数量（暂时不用）
@@ -33,6 +44,22 @@ public class Collection {
      * 更新日期
      */
     private Date updateDate;
+
+    public String getCollectorName() {
+        return collectorName;
+    }
+
+    public void setCollectorName(String collectorName) {
+        this.collectorName = collectorName;
+    }
+
+    public String getCollectionName() {
+        return collectionName;
+    }
+
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
+    }
 
     public Integer getId() {
         return id;
@@ -80,5 +107,15 @@ public class Collection {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    @Override
+    public Map toDict() {
+        Map<Object, Object> map = new HashMap<>();
+        map.put("collectorId", collectorId);
+        map.put("collectorName", collectorName);
+        map.put("collectionId", collectionId);
+        map.put("collectionName", collectionName);
+        return map;
     }
 }

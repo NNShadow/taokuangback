@@ -49,7 +49,7 @@ public class ContentController {
             content = contentInit(content);
             //获取发布者姓名
             String username = userService.selectById((int) JwtUtil.getClamis(token, encry).get("userId")).getUsername();
-            content.setUsername(username);
+            content.setUserId(username);
             if (contentService.insert(content) != 0){
                 result.put("msg", "添加成功");
                 result.put("success", true);
@@ -107,7 +107,7 @@ public class ContentController {
             content = contentInit(content);
             //获取发布者姓名
             String username = userService.selectById((int) JwtUtil.getClamis(token, encry).get("userId")).getUsername();
-            content.setUsername(username);
+            content.setUserId(username);
             if (contentService.update(content) != 0){
                 result.put("msg", "修改成功");
                 result.put("success", true);

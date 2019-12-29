@@ -1,22 +1,34 @@
 package com.flying.taokuang.dataobject;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 
  * @date 2019/08/24
  */
-public class Comment {
+public class Comment implements Common {
     private Integer id;
+
     /**
      * 评论的物品的id
      */
     private int contentGoodsId;
 
     /**
-     * 评论人
+     * 评论的物品的名字
      */
-    private String contentCommenter;
+    private String contentGoodsName;
+
+    /**
+     * 评论人的id
+     */
+    private int contentCommenterId;
+
+    /**
+     * 评论人的名字
+     */
+    private String contentCommenterName;
 
     /**
      * 评论内容
@@ -27,6 +39,22 @@ public class Comment {
 
     private Date updatedDate;
 
+    public String getContentGoodsName() {
+        return contentGoodsName;
+    }
+
+    public void setContentGoodsName(String contentGoodsName) {
+        this.contentGoodsName = contentGoodsName;
+    }
+
+    public int getContentCommenterId() {
+        return contentCommenterId;
+    }
+
+    public void setContentCommenterId(int contentCommenterId) {
+        this.contentCommenterId = contentCommenterId;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -35,12 +63,12 @@ public class Comment {
         this.id = id;
     }
 
-    public String getContentCommenter() {
-        return contentCommenter;
+    public String getContentCommenterName() {
+        return contentCommenterName;
     }
 
-    public void setContentCommenter(String contentCommenter) {
-        this.contentCommenter = contentCommenter;
+    public void setContentCommenterName(String contentCommenterName) {
+        this.contentCommenterName = contentCommenterName;
     }
 
     public String getContent() {
@@ -73,5 +101,16 @@ public class Comment {
 
     public void setContentGoodsId(int contentGoodsId) {
         this.contentGoodsId = contentGoodsId;
+    }
+
+    @Override
+    public Map toDict() {
+        Map<Object, Object> map = new HashMap<>();
+        map.put("contentGoodsId", contentGoodsId);
+        map.put("contentGoodsName", contentGoodsName);
+        map.put("contentCommenterId", contentCommenterId);
+        map.put("contentCommenterName", contentCommenterName);
+        map.put("content", content);
+        return map;
     }
 }

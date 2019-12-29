@@ -1,14 +1,13 @@
 package com.flying.taokuang.dataobject;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 
  * @date 2019/08/24
  */
-
-public class User {
-
+public class User implements Common {
     private Integer id;
 
     private String token;
@@ -190,5 +189,21 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public Map toDict() {
+        Map<Object, Object> map = new HashMap<>();
+        map.put("studentId", studentId);
+        map.put("studentIdCard", studentIdCard);
+        map.put("authority", authority);
+        map.put("agree", agree);
+        map.put("username", username);
+        map.put("picture", picture);
+        map.put("mobilePhoneNumber", mobilePhoneNumber);
+        map.put("mobilePhoneNumberVerified", mobilePhoneNumberVerified);
+        map.put("email", email);
+        map.put("emailVerified", emailVerified);
+        return map;
     }
 }

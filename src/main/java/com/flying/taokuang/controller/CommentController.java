@@ -52,7 +52,7 @@ public class CommentController {
             //获取评论者id，修改评论者
             int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
             User user = userService.selectById(userId);
-            comment.setContentCommenter(user.getUsername());
+            comment.setContentCommenterName(user.getUsername());
             comment.setCreatedDate(new Date());
             comment.setUpdatedDate(new Date());
             commentService.insert(comment);

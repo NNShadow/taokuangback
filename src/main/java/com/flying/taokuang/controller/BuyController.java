@@ -81,7 +81,7 @@ public class BuyController {
         }
 
         Content content = contentService.selectById(contentId);
-        if (!StringUtils.isBlank(content.getBuyer()) && content.getBuy() == 1){
+        if (!StringUtils.isBlank(content.getBuyerId()) && content.getBuy() == 1){
             content.setBird(1);
             contentService.update(content);
             result.put("msg", "鸽了");

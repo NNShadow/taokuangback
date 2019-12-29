@@ -68,10 +68,10 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public int buy(Content content, String username) {
-        if (!StringUtils.isBlank(content.getBuyer()) || content.getBuy() == 1){
+        if (!StringUtils.isBlank(content.getBuyerId()) || content.getBuy() == 1){
             return 0;
         }
-        content.setBuyer(username);
+        content.setBuyerId(username);
         content.setBuy(1);
         return contentMapper.update(content);
     }

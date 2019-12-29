@@ -1,18 +1,24 @@
 package com.flying.taokuang.dataobject;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 
  * @date 2019/08/24
  */
-public class Content {
+public class Content implements Common {
     private Integer id;
 
     /**
-     * 用户昵称
+     * 用户的id
      */
-    private String username;
+    private int userId;
+
+    /**
+     * 用户的姓名
+     */
+    private String userName;
 
     /**
      * 商品照片
@@ -25,9 +31,14 @@ public class Content {
     private Integer bird;
 
     /**
-     * 买家
+     * 买家的id
      */
-    private String buyer;
+    private int buyerId;
+
+    /**
+     * 买家的姓名
+     */
+    private String buyerName;
 
     /**
      * 商品名称
@@ -73,6 +84,22 @@ public class Content {
 
     private Date updatedDate;
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getBuyerName() {
+        return buyerName;
+    }
+
+    public void setBuyerName(String buyerName) {
+        this.buyerName = buyerName;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -81,12 +108,12 @@ public class Content {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getGoodsPic() {
@@ -105,12 +132,12 @@ public class Content {
         this.bird = bird;
     }
 
-    public String getBuyer() {
-        return buyer;
+    public int getBuyerId() {
+        return buyerId;
     }
 
-    public void setBuyer(String buyer) {
-        this.buyer = buyer;
+    public void setBuyerId(int buyerId) {
+        this.buyerId = buyerId;
     }
 
     public String getTitle() {
@@ -191,5 +218,25 @@ public class Content {
 
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    @Override
+    public Map toDict() {
+        Map<Object, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("userName", userName);
+        map.put("goodsPic", goodsPic);
+        map.put("bird", bird);
+        map.put("buyerId", buyerId);
+        map.put("buyerName", buyerName);
+        map.put("title", title);
+        map.put("contact", contact);
+        map.put("type", type);
+        map.put("money", money);
+        map.put("business", business);
+        map.put("buy", buy);
+        map.put("place", place);
+        map.put("context", context);
+        return map;
     }
 }
