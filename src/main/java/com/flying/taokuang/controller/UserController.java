@@ -79,7 +79,7 @@ public class UserController {
         if (!StringUtils.isBlank(user.getUsername()) && !StringUtils.isBlank(user.getPassword())){
             User userSearch = userService.selectByUsername(user.getUsername());
             if (userSearch.getPassword().equals(MD5Util.md5(user.getPassword()))){
-                user.setId(userSearch.getId());
+                user.setUserId(userSearch.getUserId());
                 //生成token返回
                 String token = JwtUtil.getToken(user, "salt", 60 * 24 * 30);
                 result.put("msg", "生成token");
@@ -121,8 +121,8 @@ public class UserController {
         }
 
         int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
-        String oldName = userService.selectById(userId).getUsername();
-        user.setId(userId);
+        String oldName = userService.selectByUserId(userId).getUsername();
+        user.setUserId(userId);
         if (userService.update(user, oldPassword, oldName) != 0){
             //修改每个商品对应的用户名
             List<Content> contentList = contentService.selectByUserId(oldName);

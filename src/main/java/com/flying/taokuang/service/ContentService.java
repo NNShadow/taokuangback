@@ -9,10 +9,10 @@ import java.util.List;
 public interface ContentService {
     /**
      * 根据 id 删除
-     * @param id
+     * @param contentId
      * @return
      */
-    int deleteById(Integer id);
+    int deleteById(Integer contentId);
 
     /**
      * 添加商品
@@ -37,10 +37,10 @@ public interface ContentService {
 
     /**
      * 根据id查询商品
-     * @param id
+     * @param contentId
      * @return
      */
-    Content selectById(int id);
+    Content selectByContentId(int contentId);
 
     /**
      * 查询全部商品

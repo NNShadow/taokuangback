@@ -8,17 +8,17 @@ import java.util.Map;
  * @date 2019/08/24
  */
 public class Comment implements Common {
-    private Integer id;
+    private Integer commentId;
 
     /**
      * 评论的物品的id
      */
-    private int contentGoodsId;
+    private int contentId;
 
     /**
      * 评论的物品的名字
      */
-    private String contentGoodsName;
+    private String contentName;
 
     /**
      * 评论人的id
@@ -33,18 +33,18 @@ public class Comment implements Common {
     /**
      * 评论内容
      */
-    private String content;
+    private String text;
 
     private Date createdDate;
 
     private Date updatedDate;
 
-    public String getContentGoodsName() {
-        return contentGoodsName;
+    public String getContentName() {
+        return contentName;
     }
 
-    public void setContentGoodsName(String contentGoodsName) {
-        this.contentGoodsName = contentGoodsName;
+    public void setContentName(String contentName) {
+        this.contentName = contentName;
     }
 
     public int getContentCommenterId() {
@@ -55,12 +55,12 @@ public class Comment implements Common {
         this.contentCommenterId = contentCommenterId;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getCommentId() {
+        return commentId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCommentId(Integer commentId) {
+        this.commentId = commentId;
     }
 
     public String getContentCommenterName() {
@@ -71,12 +71,12 @@ public class Comment implements Common {
         this.contentCommenterName = contentCommenterName;
     }
 
-    public String getContent() {
-        return content;
+    public String getText() {
+        return text;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Date getCreatedDate() {
@@ -95,22 +95,22 @@ public class Comment implements Common {
         this.updatedDate = updatedDate;
     }
 
-    public int getContentGoodsId() {
-        return contentGoodsId;
+    public int getContentId() {
+        return contentId;
     }
 
-    public void setContentGoodsId(int contentGoodsId) {
-        this.contentGoodsId = contentGoodsId;
+    public void setContentId(int contentId) {
+        this.contentId = contentId;
     }
 
     @Override
     public Map toDict() {
         Map<Object, Object> map = new HashMap<>();
-        map.put("contentGoodsId", contentGoodsId);
-        map.put("contentGoodsName", contentGoodsName);
+        map.put("contentGoodsId", contentId);
+        map.put("contentGoodsName", contentName);
         map.put("contentCommenterId", contentCommenterId);
         map.put("contentCommenterName", contentCommenterName);
-        map.put("content", content);
+        map.put("content", text);
         return map;
     }
 }

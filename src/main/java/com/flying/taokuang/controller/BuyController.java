@@ -49,8 +49,8 @@ public class BuyController {
             return result.toJSONString();
         }
 
-        Content content = contentService.selectById(contentId);
-        User user = userService.selectById((int) JwtUtil.getClamis(token, encry).get("userId"));
+        Content content = contentService.selectByContentId(contentId);
+        User user = userService.selectByUserId((int) JwtUtil.getClamis(token, encry).get("userId"));
         if (contentService.buy(content, user.getUsername()) == 1){
             //购买成功后删除收藏
             collectionService.deleteByCollectionId(contentId);
@@ -80,7 +80,7 @@ public class BuyController {
             return result.toJSONString();
         }
 
-        Content content = contentService.selectById(contentId);
+        Content content = contentService.selectByContentId(contentId);
         if (!StringUtils.isBlank(content.getBuyerId()) && content.getBuy() == 1){
             content.setBird(1);
             contentService.update(content);

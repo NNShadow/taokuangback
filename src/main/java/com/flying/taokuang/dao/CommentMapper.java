@@ -14,56 +14,60 @@ import java.util.List;
 
 public interface CommentMapper {
     @Delete({
-        "delete from taokuang_comment",
-        "where id = #{id,jdbcType=INTEGER}"
+            "delete from taokuang_comment",
+            "where commentId = #{commentId,jdbcType=INTEGER}"
     })
-    int deleteById(Integer id);
+    int deleteById(Integer commentId);
 
     @Insert({
-        "insert into taokuang_comment (contentGoodsId, ",
-        "contentCommenter, content, ",
-        "createdDate, updatedDate)",
-        "values (#{contentGoodsId,jdbcType=INTEGER}, ",
-        "#{contentCommenter,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, ",
-        "#{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP})"
+            "insert into taokuang_comment (contentId, ",
+            "contentCommenterId, text, ",
+            "createdDate, updatedDate)",
+            "values (#{contentId,jdbcType=INTEGER}, ",
+            "#{contentCommenterId,jdbcType=INTEGER}, #{text,jdbcType=VARCHAR}, ",
+            "#{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP})"
     })
     int insert(Comment record);
 
-    //TODO comment 1
     @Select({
-        "select",
-        "id, contentGoodsId, contentCommenter, content, createdDate, updatedDate",
-        "from taokuang_comment",
-        "where contentGoodsId = #{contentGoodsId,jdbcType=INTEGER}"
+            "select comment.commentId, comment.contentId, content.contentName, comment.contentCommenterId, ",
+            "user.username, comment.text, comment.createdDate, comment.updatedDate ",
+            "from taokuang_comment comment ",
+            "left join taokuang_user user on user.userId=comment.contentCommenterId ",
+            "left join taokuang_content content on content.contentId=comment.contentId ",
+            "where comment.contentId = #{contentId, jdbcType=INTEGER}"
     })
     @Results(id = "use", value = {
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="contentGoodsId", property="contentGoodsId", jdbcType=JdbcType.INTEGER),
-        @Result(column="contentCommenter", property="contentCommenter", jdbcType=JdbcType.VARCHAR),
-        @Result(column="content", property="content", jdbcType=JdbcType.VARCHAR),
-        @Result(column="createdDate", property="createdDate", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="updatedDate", property="updatedDate", jdbcType=JdbcType.TIMESTAMP)
+            @Result(column = "commentId", property = "commentId", jdbcType = JdbcType.INTEGER, id = true),
+            @Result(column = "contentId", property = "contentId", jdbcType = JdbcType.INTEGER),
+            @Result(column = "contentName", property = "contentName", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "contentCommenterId", property = "contentCommenterId", jdbcType = JdbcType.INTEGER),
+            @Result(column = "username", property = "contentCommenterName", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "text", property = "text", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "createdDate", property = "createdDate", jdbcType = JdbcType.TIMESTAMP),
+            @Result(column = "updatedDate", property = "updatedDate", jdbcType = JdbcType.TIMESTAMP)
     })
-    List<Comment> selectByContentGoodsId(Integer contentGoodsId);
+    List<Comment> selectByContentId(Integer contentId);
 
-    //TODO comment 2
     @Select({
-            "select",
-            "id, contentGoodsId, contentCommenter, content, createdDate, updatedDate",
-            "from taokuang_comment",
-            "where contentCommenter = #{contentCommenter,jdbcType=VARCHAR}"
+            "select comment.commentId, comment.contentId, content.contentName, comment.contentCommenterId, ",
+            "user.username, comment.text, comment.createdDate, comment.updatedDate ",
+            "from taokuang_comment comment ",
+            "left join taokuang_user user on user.userId=comment.contentCommenterId ",
+            "left join taokuang_content content on content.contentId=comment.contentId ",
+            "where comment.contentCommenterId = #{contentCommenterId, jdbcType=INTEGER}"
     })
     @ResultMap("use")
     List<Comment> selectByContentCommenterId(int contentCommenterId);
 
     @Update({
-        "update taokuang_comment",
-        "set contentGoodsId = #{contentGoodsId,jdbcType=INTEGER},",
-          "contentCommenterId = #{contentCommenterId,jdbcType=INTEGER},",
-          "content = #{content,jdbcType=VARCHAR},",
-          "createdDate = #{createdDate,jdbcType=TIMESTAMP},",
-          "updatedDate = #{updatedDate,jdbcType=TIMESTAMP}",
-        "where id = #{id,jdbcType=INTEGER}"
+            "update taokuang_comment ",
+            "set contentId = #{contentId,jdbcType=INTEGER}, ",
+            "contentCommenterId = #{contentCommenterId,jdbcType=INTEGER}, ",
+            "text = #{text,jdbcType=VARCHAR}, ",
+            "createdDate = #{createdDate,jdbcType=TIMESTAMP}, ",
+            "updatedDate = #{updatedDate,jdbcType=TIMESTAMP} ",
+            "where commentId = #{commentId,jdbcType=INTEGER} "
     })
     int update(Comment comment);
 }

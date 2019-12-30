@@ -36,7 +36,7 @@ public class CollectionServiceImpl implements CollectionService {
     public int insert(Collection collection) {
         //这个人收藏过这个商品 或 没有这个商品
         if (collectionMapper.selectByCollectionIdAndCollectorId(collection.getCollectionId(), collection.getCollectorId()) != null
-                || contentMapper.selectById(collection.getCollectionId()) == null){
+                || contentMapper.selectByContentId(collection.getCollectionId()) == null){
             return 0;
         }
         return collectionMapper.insert(collection);

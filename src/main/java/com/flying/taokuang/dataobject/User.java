@@ -8,7 +8,7 @@ import java.util.Map;
  * @date 2019/08/24
  */
 public class User implements Common {
-    private Integer id;
+    private Integer userId;
 
     private String token;
 
@@ -71,12 +71,12 @@ public class User implements Common {
 
     private Date updatedDate;
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getStudentId() {

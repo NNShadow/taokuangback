@@ -26,14 +26,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public int insert(User user) {
         user.setPassword(MD5Util.md5(user.getPassword()));
-        if (userMapper.selectById(user.getId()) == null){
+        if (userMapper.selectById(user.getUserId()) == null){
             return userMapper.insert(user);
         }
         return 0;
     }
 
     @Override
-    public User selectById(int id) {
+    public User selectByUserId(int id) {
         return userMapper.selectById(id);
     }
 
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         }
         user.setPassword(MD5Util.md5(user.getPassword()));
         user.setUpdatedDate(new Date());
-        User newUser = userMapper.selectById(user.getId());
+        User newUser = userMapper.selectById(user.getUserId());
         if (newUser == null || newUser.getUsername().equals(user.getUsername())){
             return userMapper.update(user);
         }

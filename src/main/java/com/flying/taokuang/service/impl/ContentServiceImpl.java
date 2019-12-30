@@ -38,8 +38,8 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public Content selectById(int id) {
-        return contentMapper.selectById(id);
+    public Content selectByContentId(int id) {
+        return contentMapper.selectByContentId(id);
     }
 
     @Override

@@ -28,8 +28,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> selectByContentGoodsId(Integer contentGoodsId) {
-        return commentMapper.selectByContentGoodsId(contentGoodsId);
+    public List<Comment> selectByContentId(Integer contentId) {
+        return commentMapper.selectByContentId(contentId);
     }
 
     @Override

@@ -57,7 +57,7 @@ public class SelectController {
         }
 
         int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
-        User user = userService.selectById(userId);
+        User user = userService.selectByUserId(userId);
         result.put("msg", "我的商品");
         result.put("success", true);
         result.put("contentList", contentService.selectByUserId(user.getUsername()));

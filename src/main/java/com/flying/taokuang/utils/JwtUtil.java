@@ -21,7 +21,7 @@ public class JwtUtil {
     public static String getToken(User user, String encryKey, long minutes){
         long currentTime = System.currentTimeMillis();
         Map<String, Object> map = new HashMap<>();
-        map.put("userId", user.getId());
+        map.put("userId", user.getUserId());
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString()) //当前用户
                 .setIssuedAt(new Date()) //签发日期

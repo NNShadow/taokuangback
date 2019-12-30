@@ -8,7 +8,7 @@ import java.util.Map;
  * @date 2019/08/24
  */
 public class Content implements Common {
-    private Integer id;
+    private Integer contentId;
 
     /**
      * 用户的id
@@ -100,12 +100,12 @@ public class Content implements Common {
         this.buyerName = buyerName;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getContentId() {
+        return contentId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setContentId(Integer contentId) {
+        this.contentId = contentId;
     }
 
     public int getUserId() {

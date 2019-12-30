@@ -21,52 +21,61 @@ public interface CollectionMapper {
 
     @Delete({
             "delete from taokuang_collection",
-            "where collectorId = #{collectorId,jdbcType=INTEGER} and collectionId = #{collectionId,jdbcType=INTEGER}"
+            "where collectorId = #{collectorId,jdbcType=INTEGER} ",
+            "and collectionId = #{collectionId,jdbcType=INTEGER}"
     })
     int deleteByUserIdAndCollectionId(Integer collectorId, Integer collectionId);
 
     @Insert({
             "insert into taokuang_collection (collectorId, ",
             "collectionId, collectionNum, ",
-            "createdDate, updateDate)",
+            "createdDate, updateDate) ",
             "values (#{collectorId,jdbcType=INTEGER}, ",
             "#{collectionId,jdbcType=INTEGER}, #{collectionNum,jdbcType=INTEGER}, ",
             "#{createdDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP})"
     })
     int insert(Collection record);
 
-    //TODO collection 1
     @Select({
-            "select",
-            "id, collectorId, collectionId, collectionNum, createdDate, updateDate",
-            "from taokuang_collection",
+            "select id, collectorId, user.username, ",
+            "collectionId, content.contentName, ",
+            "collectionNum, collection.createdDate, collection.updateDate ",
+            "from taokuang_collection collection ",
+            "left join taokuang_user user on user.userId = collectorId ",
+            "left join taokuang_content content on content.contentId = collectionId ",
             "where collectionId = #{collectionId,jdbcType=INTEGER}"
     })
     @Results(id = "use", value = {
             @Result(column = "id", property = "id", jdbcType = JdbcType.INTEGER, id = true),
             @Result(column = "collectorId", property = "collectorId", jdbcType = JdbcType.INTEGER),
+            @Result(column = "username", property = "collectorName", jdbcType = JdbcType.VARCHAR),
             @Result(column = "collectionId", property = "collectionId", jdbcType = JdbcType.INTEGER),
+            @Result(column = "contentName", property = "collectionName", jdbcType = JdbcType.VARCHAR),
             @Result(column = "collectionNum", property = "collectionNum", jdbcType = JdbcType.INTEGER),
             @Result(column = "createdDate", property = "createdDate", jdbcType = JdbcType.TIMESTAMP),
             @Result(column = "updateDate", property = "updateDate", jdbcType = JdbcType.TIMESTAMP)
     })
     List<Collection> selectByCollectionId(int collectionId);
 
-    //TODO collection 2
     @Select({
-            "select",
-            "id, collectorId, collectionId, collectionNum, createdDate, updateDate",
-            "from taokuang_collection",
+            "select id, collectorId, user.username, ",
+            "collectionId, content.contentName, ",
+            "collectionNum, collection.createdDate, collection.updateDate ",
+            "from taokuang_collection collection ",
+            "left join taokuang_user user on user.userId = collectorId ",
+            "left join taokuang_content content on content.contentId = collectionId ",
             "where collectorId = #{collectorId,jdbcType=INTEGER}"
     })
     @ResultMap("use")
     List<Collection> selectByCollectorId(int collectorId);
 
-    //TODO collection 3
     @Select({
-            "select",
-            "id, collectorId, collectionId, collectionNum, createdDate, updateDate",
-            "from taokuang_collection",
+            "select id, collectorId, user.username, ",
+            "collectionId, content.contentName, ",
+            "collectionNum, collection.createdDate, collection.updateDate ",
+            "from taokuang_collection collection ",
+            "left join taokuang_user user on user.userId = collectorId ",
+            "left join taokuang_content content on content.contentId = collectionId ",
             "where collectionId = #{collectionId,jdbcType=INTEGER}",
             "and collectorId = #{collectorId,jdbcType=INTEGER}"
     })

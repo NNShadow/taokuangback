@@ -9,10 +9,10 @@ import java.util.List;
 public interface CommentService {
     /**
      * 通过 id 删除
-     * @param id
+     * @param commentId
      * @return
      */
-    int deleteById(Integer id);
+    int deleteById(Integer commentId);
 
     /**
      * 添加评论
@@ -23,10 +23,10 @@ public interface CommentService {
 
     /**
      * 通过物品 id 查找
-     * @param contentGoodsId
+     * @param contentId
      * @return
      */
-    List<Comment> selectByContentGoodsId(Integer contentGoodsId);
+    List<Comment> selectByContentId(Integer contentId);
 
     /**
      * 通过评论人 id 查找

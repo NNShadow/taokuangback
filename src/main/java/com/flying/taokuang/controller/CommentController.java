@@ -48,10 +48,10 @@ public class CommentController {
         }
 
         if (!StringUtils.isBlank(comment.getContent()) &&
-                comment.getContentGoodsId() != 0){
+                comment.getContentId() != 0){
             //获取评论者id，修改评论者
             int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
-            User user = userService.selectById(userId);
+            User user = userService.selectByUserId(userId);
             comment.setContentCommenterName(user.getUsername());
             comment.setCreatedDate(new Date());
             comment.setUpdatedDate(new Date());

@@ -48,7 +48,7 @@ public class ContentController {
             content.setCreatedDate(new Date());
             content = contentInit(content);
             //获取发布者姓名
-            String username = userService.selectById((int) JwtUtil.getClamis(token, encry).get("userId")).getUsername();
+            String username = userService.selectByUserId((int) JwtUtil.getClamis(token, encry).get("userId")).getUsername();
             content.setUserId(username);
             if (contentService.insert(content) != 0){
                 result.put("msg", "添加成功");
@@ -106,7 +106,7 @@ public class ContentController {
         if (content != null){
             content = contentInit(content);
             //获取发布者姓名
-            String username = userService.selectById((int) JwtUtil.getClamis(token, encry).get("userId")).getUsername();
+            String username = userService.selectByUserId((int) JwtUtil.getClamis(token, encry).get("userId")).getUsername();
             content.setUserId(username);
             if (contentService.update(content) != 0){
                 result.put("msg", "修改成功");

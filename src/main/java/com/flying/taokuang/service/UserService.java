@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     /**
      * 删除
-     * @param id
+     * @param userId
      * @return
      */
-    int deleteById(Integer id);
+    int deleteById(Integer userId);
 
     /**
      * 添加学生
@@ -21,10 +21,10 @@ public interface UserService {
 
     /**
      * 通过学生 id 选择学生
-     * @param id
+     * @param userId
      * @return
      */
-    User selectById(int id);
+    User selectByUserId(int userId);
 
     /**
      * 更新
