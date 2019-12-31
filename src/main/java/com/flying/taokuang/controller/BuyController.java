@@ -34,16 +34,17 @@ public class BuyController {
 
     /**
      * 购买
+     *
      * @param token
      * @param contentId 商品id
      * @return
      */
     @RequestMapping(value = "/buy", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String buy(@RequestParam(value = "token", required = false) String token,
-                      @RequestParam(value = "contentId") int contentId){
+                      @RequestParam(value = "contentId") int contentId) {
         JSONObject result = new JSONObject();
         //验证token
-        if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
+        if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)) {
             result.put("msg", "token错误");
             result.put("success", false);
             return result.toJSONString();
@@ -51,7 +52,7 @@ public class BuyController {
 
         Content content = contentService.selectByContentId(contentId);
         User user = userService.selectByUserId((int) JwtUtil.getClamis(token, encry).get("userId"));
-        if (contentService.buy(content, user.getUsername()) == 1){
+        if (contentService.buy(content, user.getUserId()) == 1) {
             //购买成功后删除收藏
             collectionService.deleteByCollectionId(contentId);
             result.put("msg", "购买成功");
@@ -65,23 +66,24 @@ public class BuyController {
 
     /**
      * 鸽子
+     *
      * @param token
      * @param contentId 商品id
      * @return
      */
     @RequestMapping(value = "/gezi", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public String gezi(@RequestParam(value = "token", required = false) String token,
-                       @RequestParam(value = "contentId") int contentId){
+                       @RequestParam(value = "contentId") int contentId) {
         JSONObject result = new JSONObject();
         //验证token
-        if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
+        if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)) {
             result.put("msg", "token错误");
             result.put("success", false);
             return result.toJSONString();
         }
 
         Content content = contentService.selectByContentId(contentId);
-        if (!StringUtils.isBlank(content.getBuyerId()) && content.getBuy() == 1){
+        if (content.getBuyerId() != 0 && content.getBuy() == 1) {
             content.setBird(1);
             contentService.update(content);
             result.put("msg", "鸽了");

@@ -38,6 +38,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User selectByUsername(String username) {
+        return userMapper.selectByUsername(username);
+    }
+
+    @Override
     public int update(User user, String oldPassword, int oldId) {
         //判断旧密码
         if (!MD5Util.md5(oldPassword).equals(userMapper.selectById(oldId).getPassword())){

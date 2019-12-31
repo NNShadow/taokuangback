@@ -27,6 +27,13 @@ public interface UserService {
     User selectByUserId(int userId);
 
     /**
+     * 通过学生 id 选择学生
+     * @param username
+     * @return
+     */
+    User selectByUsername(String username);
+
+    /**
      * 更新
      * @param user
      * @param oldPassword

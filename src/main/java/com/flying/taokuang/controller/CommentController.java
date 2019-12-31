@@ -47,7 +47,7 @@ public class CommentController {
             return result.toJSONString();
         }
 
-        if (!StringUtils.isBlank(comment.getContent()) &&
+        if (!StringUtils.isBlank(comment.getText()) &&
                 comment.getContentId() != 0){
             //获取评论者id，修改评论者
             int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
@@ -67,20 +67,20 @@ public class CommentController {
 
     /**
      * 根据商品查找评论
-     * @param contentGoodsId 商品id
+     * @param contentId 商品id
      * @param token
      * @return
      */
     @RequestMapping(value = "/select", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    public String selectComment(@RequestParam(value = "contentGoodsId") int contentGoodsId,
+    public String selectComment(@RequestParam(value = "contentId") int contentId,
                                 @RequestParam(value = "token", required = false) String token){
         JSONObject result = new JSONObject();
-        if (contentGoodsId <= 0){
+        if (contentId <= 0){
             result.put("msg", "商品id错误");
             result.put("success", false);
             return result.toJSONString();
         }
-        List<Comment> commentList = commentService.selectByContentGoodsId(contentGoodsId);
+        List<Comment> commentList = commentService.selectByContentId(contentId);
         if (commentList != null){
             result.put("msg", "评论内容");
             result.put("success", true);

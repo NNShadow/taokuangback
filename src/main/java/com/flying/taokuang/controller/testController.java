@@ -1,13 +1,6 @@
 package com.flying.taokuang.controller;
 
-import com.flying.taokuang.dataobject.Comment;
-import com.flying.taokuang.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @author NNShadow
@@ -25,5 +18,5 @@ public class testController {
 //            System.out.println(comments.get(i).toString());
 //        }
 //        return commentService.selectByContentId(contentId).toString();
-    }
+//    }
 }

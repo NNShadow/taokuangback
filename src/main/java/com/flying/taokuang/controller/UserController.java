@@ -121,25 +121,25 @@ public class UserController {
         }
 
         int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
-        String oldName = userService.selectByUserId(userId).getUsername();
+        int id = userService.selectByUserId(userId).getUserId();
         user.setUserId(userId);
-        if (userService.update(user, oldPassword, oldName) != 0){
+        if (userService.update(user, oldPassword, id) != 0){
             //修改每个商品对应的用户名
-            List<Content> contentList = contentService.selectByUserId(oldName);
+            List<Content> contentList = contentService.selectByUserId(id);
             contentList.stream().forEach(content -> {
-                content.setUserId(user.getUsername());
+                content.setUserId(user.getUserId());
                 contentService.update(content);
             });
             //修改每个评论对应的用户名
-            List<Comment> commentList = commentService.selectByContentCommenterId(oldName);
+            List<Comment> commentList = commentService.selectByContentCommenterId(id);
             commentList.stream().forEach(comment -> {
                 comment.setContentCommenterName(user.getUsername());
                 commentService.update(comment);
             });
             //修改商品对应的购买者名字
-            List<Content> contentBuyerList = contentService.selectByBuyerId(oldName);
+            List<Content> contentBuyerList = contentService.selectByBuyerId(id);
             contentBuyerList.stream().forEach(content -> {
-                content.setBuyerId(user.getUsername());
+                content.setBuyerId(user.getUserId());
                 contentService.update(content);
             });
             result.put("msg", "修改成功");
