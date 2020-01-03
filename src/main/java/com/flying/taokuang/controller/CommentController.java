@@ -38,19 +38,20 @@ public class CommentController {
 
     /**
      * 添加商品评论
+     *
      * @param comment 实例化（评论）
      * @param token
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public Result addComment(Comment comment, @RequestParam(value = "token", required = false) String token){
+    public Result addComment(Comment comment, @RequestParam(value = "token", required = false) String token) {
         //验证token
-        if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
+        if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)) {
             return responseData.write("token错误", 404, new HashMap<>());
         }
 
         if (!StringUtils.isBlank(comment.getText()) &&
-                comment.getContentId() != 0){
+                comment.getContentId() != 0) {
             //获取评论者id，修改评论者
             int userId = (int) JwtUtil.getClamis(token, encry).get("userId");
             User user = userService.selectByUserId(userId);
@@ -65,18 +66,19 @@ public class CommentController {
 
     /**
      * 根据商品查找评论
+     *
      * @param contentId 商品id
      * @param token
      * @return
      */
     @RequestMapping(value = "/select", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public Result selectComment(@RequestParam(value = "contentId") int contentId,
-                                @RequestParam(value = "token", required = false) String token){
-        if (contentId <= 0){
+                                @RequestParam(value = "token", required = false) String token) {
+        if (contentId <= 0) {
             return responseData.write("商品id错误", 404, new HashMap<>());
         }
         List<Comment> commentList = commentService.selectByContentId(contentId);
-        if (commentList != null){
+        if (commentList != null) {
             return responseData.write("评论内容", 200, commentList);
         }
         return responseData.write("无内容", 200, new HashMap<>());
