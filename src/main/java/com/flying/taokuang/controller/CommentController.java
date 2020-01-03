@@ -1,11 +1,12 @@
 package com.flying.taokuang.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.flying.taokuang.dataobject.Comment;
+import com.flying.taokuang.dataobject.Result;
 import com.flying.taokuang.dataobject.User;
 import com.flying.taokuang.service.CommentService;
 import com.flying.taokuang.service.UserService;
 import com.flying.taokuang.utils.JwtUtil;
+import com.flying.taokuang.utils.ResponseData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -31,6 +33,9 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private ResponseData responseData;
+
     /**
      * 添加商品评论
      * @param comment 实例化（评论）
@@ -38,13 +43,10 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public String addComment(Comment comment, @RequestParam(value = "token", required = false) String token){
-        JSONObject result = new JSONObject();
+    public Result addComment(Comment comment, @RequestParam(value = "token", required = false) String token){
         //验证token
         if (StringUtils.isBlank(token) || !JwtUtil.isExpiration(token, encry)){
-            result.put("msg", "token错误");
-            result.put("success", false);
-            return result.toJSONString();
+            return responseData.write("token错误", 404, new HashMap<>());
         }
 
         if (!StringUtils.isBlank(comment.getText()) &&
@@ -56,13 +58,9 @@ public class CommentController {
             comment.setCreatedDate(new Date());
             comment.setUpdatedDate(new Date());
             commentService.insert(comment);
-            result.put("msg", "评论成功");
-            result.put("success", true);
-            return result.toJSONString();
+            return responseData.write("评论成功", 200, new HashMap<>());
         }
-        result.put("msg", "缺少信息");
-        result.put("success", false);
-        return result.toJSONString();
+        return responseData.write("缺少信息", 404, new HashMap<>());
     }
 
     /**
@@ -72,24 +70,15 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/select", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    public String selectComment(@RequestParam(value = "contentId") int contentId,
+    public Result selectComment(@RequestParam(value = "contentId") int contentId,
                                 @RequestParam(value = "token", required = false) String token){
-        JSONObject result = new JSONObject();
         if (contentId <= 0){
-            result.put("msg", "商品id错误");
-            result.put("success", false);
-            return result.toJSONString();
+            return responseData.write("商品id错误", 404, new HashMap<>());
         }
         List<Comment> commentList = commentService.selectByContentId(contentId);
         if (commentList != null){
-            result.put("msg", "评论内容");
-            result.put("success", true);
-            result.put("commentList", commentList);
-            return result.toJSONString();
+            return responseData.write("评论内容", 200, commentList);
         }
-        result.put("msg", "无内容");
-        result.put("success", true);
-        result.put("commentList", null);
-        return result.toJSONString();
+        return responseData.write("无内容", 200, new HashMap<>());
     }
 }
