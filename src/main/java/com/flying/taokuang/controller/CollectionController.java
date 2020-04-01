@@ -70,7 +70,7 @@ public class CollectionController {
             collection.setCollectionId(collectionId);
             collection.setCollectorId(userId);
             collection.setCreatedDate(new Date());
-            collection.setUpdateDate(new Date());
+            collection.setUpdatedDate(new Date());
             if (collectionService.insert(collection) == 1) {
                 return responseData.write("收集成功", 200, new HashMap<>());
             }
